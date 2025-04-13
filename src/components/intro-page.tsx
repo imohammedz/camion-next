@@ -14,7 +14,7 @@ const IntroPage: React.FC = () => {
         <p className="text-xl text-muted-foreground max-w-[700px]">Manage your fleet efficiently and effectively</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+      <div className="grid gap-6 md:grid-cols-2 lg:gap-8 px-14">
         <Card>
           <CardHeader>
             <CardTitle>Manage Fleets</CardTitle>
@@ -26,7 +26,7 @@ const IntroPage: React.FC = () => {
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button asChild>
-              <Link href="/fleet-management">Fleet Management</Link>
+              <Link href="/login?tab=fleet">Fleet Management</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -42,23 +42,7 @@ const IntroPage: React.FC = () => {
           </CardContent>
           <CardFooter className="flex justify-center">
             <Button asChild>
-              <Link href="/create-order">Create Order</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Advertisements</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Create and manage advertisements for your fleet. Reach potential customers.
-            </p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Button asChild>
-              <Link href="/create-advertisement">Create Advertisement</Link>
+              <Link href="/login?tab=orders">Create Order</Link>
             </Button>
           </CardFooter>
         </Card>

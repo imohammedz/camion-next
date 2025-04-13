@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme, darkMode }) => {
   const pathname = usePathname()
 
   return (
-    <header className="border-b">
+    <header className="fixed top-0 w-full z-50 border-b bg-white dark:bg-black transition-colors">
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-2">
@@ -29,9 +29,11 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme, darkMode }) => {
         <nav className="flex items-center gap-4">
           <div className="flex items-center space-x-2">
             <Switch id="theme-mode" checked={darkMode} onCheckedChange={toggleTheme} />
-            <Label htmlFor="theme-mode" className="flex items-center gap-1">
+            <Label htmlFor="theme-mode" className="flex items-center gap-1 cursor-pointer">
               {darkMode ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-              <span className="sr-only md:not-sr-only md:inline-block">{darkMode ? "Dark" : "Light"} Mode</span>
+              <span className="sr-only md:not-sr-only md:inline-block">
+                {darkMode ? "Dark" : "Light"} Mode
+              </span>
             </Label>
           </div>
 
@@ -65,4 +67,3 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme, darkMode }) => {
 }
 
 export default Header
-
