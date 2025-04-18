@@ -4,129 +4,143 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { z } from "zod"
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import SignupForm from "@/components/signup-form"
+import { signupSchema } from "@/lib/zod-schemas"
+import { supabase } from "@/lib/supabase"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+type SignupFormData = z.infer<typeof signupSchema>
 
 const SignupPage: React.FC = () => {
   const router = useRouter()
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupFormData>({
     firstName: "",
     lastName: "",
     email: "",
+    phoneNumber:"",
+    role: "",
+    userName: "",
     password: "",
     confirmPassword: "",
   })
-  const [error, setError] = useState("")
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  const [generalError, setGeneralError] = useState("")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
+    console.log("inside the signin tab ",name)
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
+
+    // Clear field-specific error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlePhoneChange = (value: string) => {
+    console.log("inside the pphone number change ")
+    setFormData((prev) => ({
+      ...prev,
+      phoneNumber: value,
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setGeneralError("")
 
-    // Simple validation
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-      setError("Please fill in all required fields")
-      return
+    try {
+      // Validate form data against the schema
+      // const response = await fetch(`/api/get-users?email=${encodeURIComponent(formData.email)}`, {
+      //   method: 'GET',
+      // });
+  
+      // const data = await response.json();
+  
+      // if (data.exists) {
+      //   console.log('User already exists');
+      // } else {
+      //   console.log('Email is available');
+      // }
+
+      signupSchema.parse(formData)
+      console.log("form data : ",formData)
+
+      const { email, password } = formData;
+      const userMetadata = {
+        firstName: formData.firstName || '',
+        lastName: formData.lastName || '',
+        email:formData.email || "", 
+        phoneNumber: formData.phoneNumber || '',
+        role: formData.role || 'USER', // Default role can be 'USER' or something else
+        userName: formData.userName || '',
+      };
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_FE_URL}/verify`,
+          data: userMetadata,
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+  
+      const user = data?.user; // Get the user from data
+      if (user) {
+        console.log('Verification email sent to:', email);
+        // Optionally, you can log the user data here for further use
+        console.log(user);
+      }      
+
+      //router.push(`/login`) 
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Convert Zod errors to a more usable format
+        const fieldErrors: { [key: string]: string } = {}
+        error.errors.forEach((err) => {
+          if (err.path) {
+            fieldErrors[err.path[0]] = err.message
+          }
+        })
+        setErrors(fieldErrors)
+      } else {
+        setGeneralError("An unexpected error occurred. Please try again.")
+      }
     }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match")
-      return
-    }
-
-    // Here you would typically make an API call to register the user
-    // For this example, we'll just simulate a successful registration
-    console.log("Registering user:", formData)
-
-    // Redirect to login page after successful registration
-    router.push("/login")
   }
 
   return (
     <div className="container flex items-center justify-center min-h-[80vh] px-4 py-10">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md p-8">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Sign Up</CardTitle>
-          <CardDescription className="text-center">Create an account to get started</CardDescription>
         </CardHeader>
-
-        <CardContent>
-          {error && (
-            <Alert variant="destructive" className="mb-4">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="name@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <Button type="submit" className="w-full">
-              Sign Up
-            </Button>
-          </form>
-        </CardContent>
-
+        <SignupForm
+          title="Sign Up to Get Started"
+          description="Sign up to access all features and get started."
+          formData={formData}
+          handleChange={handleChange}
+          errors={errors}
+          generalError={generalError}
+          handleSubmit={handleSubmit}
+          handlePhoneChange={handlePhoneChange}
+        />
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary underline-offset-4 hover:underline">
+            <Link href={`/login`} className="text-primary underline-offset-4 hover:underline">
               Sign In
             </Link>
           </p>
@@ -136,5 +150,5 @@ const SignupPage: React.FC = () => {
   )
 }
 
-export default SignupPage
 
+export default SignupPage
