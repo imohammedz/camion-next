@@ -16,7 +16,7 @@ datasource db {
 }
 
 model Users {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   firstName   String
   lastName    String
   email       String   @unique
@@ -25,11 +25,12 @@ model Users {
   userName    String   @unique
   createdAt   DateTime @default(now())
 
-  fleet Fleet?
+  fleet   Fleet?  @relation(fields: [fleetId], references: [id])
+  fleetId String? // Optional foreign key if not all users belong to a fleet
 }
 
 model Fleet {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(uuid())
   fleetName    String
   fleetDetails String
   createdAt    DateTime @default(now())
@@ -38,6 +39,5 @@ model Fleet {
   longitude    Float?
   locationName String?
 
-  userId Int   @unique
-  user   Users @relation(fields: [userId], references: [id])
+  users Users[] // Back-reference to list of users in this fleet
 }

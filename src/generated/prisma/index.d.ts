@@ -955,6 +955,36 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type FleetCountOutputType
+   */
+
+  export type FleetCountOutputType = {
+    users: number
+  }
+
+  export type FleetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | FleetCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FleetCountOutputType without action
+   */
+  export type FleetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FleetCountOutputType
+     */
+    select?: FleetCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FleetCountOutputType without action
+   */
+  export type FleetCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsersWhereInput
+  }
+
 
   /**
    * Models
@@ -966,22 +996,12 @@ export namespace Prisma {
 
   export type AggregateUsers = {
     _count: UsersCountAggregateOutputType | null
-    _avg: UsersAvgAggregateOutputType | null
-    _sum: UsersSumAggregateOutputType | null
     _min: UsersMinAggregateOutputType | null
     _max: UsersMaxAggregateOutputType | null
   }
 
-  export type UsersAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UsersSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type UsersMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     firstName: string | null
     lastName: string | null
     email: string | null
@@ -989,10 +1009,11 @@ export namespace Prisma {
     role: string | null
     userName: string | null
     createdAt: Date | null
+    fleetId: string | null
   }
 
   export type UsersMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     firstName: string | null
     lastName: string | null
     email: string | null
@@ -1000,6 +1021,7 @@ export namespace Prisma {
     role: string | null
     userName: string | null
     createdAt: Date | null
+    fleetId: string | null
   }
 
   export type UsersCountAggregateOutputType = {
@@ -1011,17 +1033,10 @@ export namespace Prisma {
     role: number
     userName: number
     createdAt: number
+    fleetId: number
     _all: number
   }
 
-
-  export type UsersAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type UsersSumAggregateInputType = {
-    id?: true
-  }
 
   export type UsersMinAggregateInputType = {
     id?: true
@@ -1032,6 +1047,7 @@ export namespace Prisma {
     role?: true
     userName?: true
     createdAt?: true
+    fleetId?: true
   }
 
   export type UsersMaxAggregateInputType = {
@@ -1043,6 +1059,7 @@ export namespace Prisma {
     role?: true
     userName?: true
     createdAt?: true
+    fleetId?: true
   }
 
   export type UsersCountAggregateInputType = {
@@ -1054,6 +1071,7 @@ export namespace Prisma {
     role?: true
     userName?: true
     createdAt?: true
+    fleetId?: true
     _all?: true
   }
 
@@ -1095,18 +1113,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UsersAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UsersSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UsersMinAggregateInputType
@@ -1137,14 +1143,12 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UsersCountAggregateInputType | true
-    _avg?: UsersAvgAggregateInputType
-    _sum?: UsersSumAggregateInputType
     _min?: UsersMinAggregateInputType
     _max?: UsersMaxAggregateInputType
   }
 
   export type UsersGroupByOutputType = {
-    id: number
+    id: string
     firstName: string
     lastName: string
     email: string
@@ -1152,9 +1156,8 @@ export namespace Prisma {
     role: string
     userName: string
     createdAt: Date
+    fleetId: string | null
     _count: UsersCountAggregateOutputType | null
-    _avg: UsersAvgAggregateOutputType | null
-    _sum: UsersSumAggregateOutputType | null
     _min: UsersMinAggregateOutputType | null
     _max: UsersMaxAggregateOutputType | null
   }
@@ -1182,6 +1185,7 @@ export namespace Prisma {
     role?: boolean
     userName?: boolean
     createdAt?: boolean
+    fleetId?: boolean
     fleet?: boolean | Users$fleetArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
@@ -1194,6 +1198,8 @@ export namespace Prisma {
     role?: boolean
     userName?: boolean
     createdAt?: boolean
+    fleetId?: boolean
+    fleet?: boolean | Users$fleetArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type UsersSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1205,6 +1211,8 @@ export namespace Prisma {
     role?: boolean
     userName?: boolean
     createdAt?: boolean
+    fleetId?: boolean
+    fleet?: boolean | Users$fleetArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type UsersSelectScalar = {
@@ -1216,14 +1224,19 @@ export namespace Prisma {
     role?: boolean
     userName?: boolean
     createdAt?: boolean
+    fleetId?: boolean
   }
 
-  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phoneNumber" | "role" | "userName" | "createdAt", ExtArgs["result"]["users"]>
+  export type UsersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "phoneNumber" | "role" | "userName" | "createdAt" | "fleetId", ExtArgs["result"]["users"]>
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     fleet?: boolean | Users$fleetArgs<ExtArgs>
   }
-  export type UsersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UsersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UsersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fleet?: boolean | Users$fleetArgs<ExtArgs>
+  }
+  export type UsersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fleet?: boolean | Users$fleetArgs<ExtArgs>
+  }
 
   export type $UsersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Users"
@@ -1231,7 +1244,7 @@ export namespace Prisma {
       fleet: Prisma.$FleetPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       firstName: string
       lastName: string
       email: string
@@ -1239,6 +1252,7 @@ export namespace Prisma {
       role: string
       userName: string
       createdAt: Date
+      fleetId: string | null
     }, ExtArgs["result"]["users"]>
     composites: {}
   }
@@ -1663,7 +1677,7 @@ export namespace Prisma {
    * Fields of the Users model
    */
   interface UsersFieldRefs {
-    readonly id: FieldRef<"Users", 'Int'>
+    readonly id: FieldRef<"Users", 'String'>
     readonly firstName: FieldRef<"Users", 'String'>
     readonly lastName: FieldRef<"Users", 'String'>
     readonly email: FieldRef<"Users", 'String'>
@@ -1671,6 +1685,7 @@ export namespace Prisma {
     readonly role: FieldRef<"Users", 'String'>
     readonly userName: FieldRef<"Users", 'String'>
     readonly createdAt: FieldRef<"Users", 'DateTime'>
+    readonly fleetId: FieldRef<"Users", 'String'>
   }
     
 
@@ -1920,6 +1935,10 @@ export namespace Prisma {
      */
     data: UsersCreateManyInput | UsersCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsersIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1990,6 +2009,10 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsersIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2109,39 +2132,33 @@ export namespace Prisma {
   }
 
   export type FleetAvgAggregateOutputType = {
-    id: number | null
     latitude: number | null
     longitude: number | null
-    userId: number | null
   }
 
   export type FleetSumAggregateOutputType = {
-    id: number | null
     latitude: number | null
     longitude: number | null
-    userId: number | null
   }
 
   export type FleetMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     fleetName: string | null
     fleetDetails: string | null
     createdAt: Date | null
     latitude: number | null
     longitude: number | null
     locationName: string | null
-    userId: number | null
   }
 
   export type FleetMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     fleetName: string | null
     fleetDetails: string | null
     createdAt: Date | null
     latitude: number | null
     longitude: number | null
     locationName: string | null
-    userId: number | null
   }
 
   export type FleetCountAggregateOutputType = {
@@ -2152,23 +2169,18 @@ export namespace Prisma {
     latitude: number
     longitude: number
     locationName: number
-    userId: number
     _all: number
   }
 
 
   export type FleetAvgAggregateInputType = {
-    id?: true
     latitude?: true
     longitude?: true
-    userId?: true
   }
 
   export type FleetSumAggregateInputType = {
-    id?: true
     latitude?: true
     longitude?: true
-    userId?: true
   }
 
   export type FleetMinAggregateInputType = {
@@ -2179,7 +2191,6 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     locationName?: true
-    userId?: true
   }
 
   export type FleetMaxAggregateInputType = {
@@ -2190,7 +2201,6 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     locationName?: true
-    userId?: true
   }
 
   export type FleetCountAggregateInputType = {
@@ -2201,7 +2211,6 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     locationName?: true
-    userId?: true
     _all?: true
   }
 
@@ -2292,14 +2301,13 @@ export namespace Prisma {
   }
 
   export type FleetGroupByOutputType = {
-    id: number
+    id: string
     fleetName: string
     fleetDetails: string
     createdAt: Date
     latitude: number | null
     longitude: number | null
     locationName: string | null
-    userId: number
     _count: FleetCountAggregateOutputType | null
     _avg: FleetAvgAggregateOutputType | null
     _sum: FleetSumAggregateOutputType | null
@@ -2329,8 +2337,8 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     locationName?: boolean
-    userId?: boolean
-    user?: boolean | UsersDefaultArgs<ExtArgs>
+    users?: boolean | Fleet$usersArgs<ExtArgs>
+    _count?: boolean | FleetCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fleet"]>
 
   export type FleetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2341,8 +2349,6 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     locationName?: boolean
-    userId?: boolean
-    user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fleet"]>
 
   export type FleetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2353,8 +2359,6 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     locationName?: boolean
-    userId?: boolean
-    user?: boolean | UsersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fleet"]>
 
   export type FleetSelectScalar = {
@@ -2365,34 +2369,29 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     locationName?: boolean
-    userId?: boolean
   }
 
-  export type FleetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fleetName" | "fleetDetails" | "createdAt" | "latitude" | "longitude" | "locationName" | "userId", ExtArgs["result"]["fleet"]>
+  export type FleetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fleetName" | "fleetDetails" | "createdAt" | "latitude" | "longitude" | "locationName", ExtArgs["result"]["fleet"]>
   export type FleetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UsersDefaultArgs<ExtArgs>
+    users?: boolean | Fleet$usersArgs<ExtArgs>
+    _count?: boolean | FleetCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type FleetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UsersDefaultArgs<ExtArgs>
-  }
-  export type FleetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UsersDefaultArgs<ExtArgs>
-  }
+  export type FleetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FleetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $FleetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Fleet"
     objects: {
-      user: Prisma.$UsersPayload<ExtArgs>
+      users: Prisma.$UsersPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       fleetName: string
       fleetDetails: string
       createdAt: Date
       latitude: number | null
       longitude: number | null
       locationName: string | null
-      userId: number
     }, ExtArgs["result"]["fleet"]>
     composites: {}
   }
@@ -2787,7 +2786,7 @@ export namespace Prisma {
    */
   export interface Prisma__FleetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    users<T extends Fleet$usersArgs<ExtArgs> = {}>(args?: Subset<T, Fleet$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2817,14 +2816,13 @@ export namespace Prisma {
    * Fields of the Fleet model
    */
   interface FleetFieldRefs {
-    readonly id: FieldRef<"Fleet", 'Int'>
+    readonly id: FieldRef<"Fleet", 'String'>
     readonly fleetName: FieldRef<"Fleet", 'String'>
     readonly fleetDetails: FieldRef<"Fleet", 'String'>
     readonly createdAt: FieldRef<"Fleet", 'DateTime'>
     readonly latitude: FieldRef<"Fleet", 'Float'>
     readonly longitude: FieldRef<"Fleet", 'Float'>
     readonly locationName: FieldRef<"Fleet", 'String'>
-    readonly userId: FieldRef<"Fleet", 'Int'>
   }
     
 
@@ -3074,10 +3072,6 @@ export namespace Prisma {
      */
     data: FleetCreateManyInput | FleetCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FleetIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3148,10 +3142,6 @@ export namespace Prisma {
      * Limit how many Fleets to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FleetIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3221,6 +3211,30 @@ export namespace Prisma {
   }
 
   /**
+   * Fleet.users
+   */
+  export type Fleet$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Users
+     */
+    select?: UsersSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Users
+     */
+    omit?: UsersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsersInclude<ExtArgs> | null
+    where?: UsersWhereInput
+    orderBy?: UsersOrderByWithRelationInput | UsersOrderByWithRelationInput[]
+    cursor?: UsersWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
+  }
+
+  /**
    * Fleet without action
    */
   export type FleetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3261,7 +3275,8 @@ export namespace Prisma {
     phoneNumber: 'phoneNumber',
     role: 'role',
     userName: 'userName',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    fleetId: 'fleetId'
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -3274,8 +3289,7 @@ export namespace Prisma {
     createdAt: 'createdAt',
     latitude: 'latitude',
     longitude: 'longitude',
-    locationName: 'locationName',
-    userId: 'userId'
+    locationName: 'locationName'
   };
 
   export type FleetScalarFieldEnum = (typeof FleetScalarFieldEnum)[keyof typeof FleetScalarFieldEnum]
@@ -3308,20 +3322,6 @@ export namespace Prisma {
   /**
    * Field references
    */
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
 
 
   /**
@@ -3364,6 +3364,20 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
   /**
    * Deep Input Types
    */
@@ -3373,7 +3387,7 @@ export namespace Prisma {
     AND?: UsersWhereInput | UsersWhereInput[]
     OR?: UsersWhereInput[]
     NOT?: UsersWhereInput | UsersWhereInput[]
-    id?: IntFilter<"Users"> | number
+    id?: StringFilter<"Users"> | string
     firstName?: StringFilter<"Users"> | string
     lastName?: StringFilter<"Users"> | string
     email?: StringFilter<"Users"> | string
@@ -3381,6 +3395,7 @@ export namespace Prisma {
     role?: StringFilter<"Users"> | string
     userName?: StringFilter<"Users"> | string
     createdAt?: DateTimeFilter<"Users"> | Date | string
+    fleetId?: StringNullableFilter<"Users"> | string | null
     fleet?: XOR<FleetNullableScalarRelationFilter, FleetWhereInput> | null
   }
 
@@ -3393,11 +3408,12 @@ export namespace Prisma {
     role?: SortOrder
     userName?: SortOrder
     createdAt?: SortOrder
+    fleetId?: SortOrderInput | SortOrder
     fleet?: FleetOrderByWithRelationInput
   }
 
   export type UsersWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     email?: string
     userName?: string
     AND?: UsersWhereInput | UsersWhereInput[]
@@ -3408,6 +3424,7 @@ export namespace Prisma {
     phoneNumber?: StringFilter<"Users"> | string
     role?: StringFilter<"Users"> | string
     createdAt?: DateTimeFilter<"Users"> | Date | string
+    fleetId?: StringNullableFilter<"Users"> | string | null
     fleet?: XOR<FleetNullableScalarRelationFilter, FleetWhereInput> | null
   }, "id" | "email" | "userName">
 
@@ -3420,18 +3437,17 @@ export namespace Prisma {
     role?: SortOrder
     userName?: SortOrder
     createdAt?: SortOrder
+    fleetId?: SortOrderInput | SortOrder
     _count?: UsersCountOrderByAggregateInput
-    _avg?: UsersAvgOrderByAggregateInput
     _max?: UsersMaxOrderByAggregateInput
     _min?: UsersMinOrderByAggregateInput
-    _sum?: UsersSumOrderByAggregateInput
   }
 
   export type UsersScalarWhereWithAggregatesInput = {
     AND?: UsersScalarWhereWithAggregatesInput | UsersScalarWhereWithAggregatesInput[]
     OR?: UsersScalarWhereWithAggregatesInput[]
     NOT?: UsersScalarWhereWithAggregatesInput | UsersScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Users"> | number
+    id?: StringWithAggregatesFilter<"Users"> | string
     firstName?: StringWithAggregatesFilter<"Users"> | string
     lastName?: StringWithAggregatesFilter<"Users"> | string
     email?: StringWithAggregatesFilter<"Users"> | string
@@ -3439,21 +3455,21 @@ export namespace Prisma {
     role?: StringWithAggregatesFilter<"Users"> | string
     userName?: StringWithAggregatesFilter<"Users"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Users"> | Date | string
+    fleetId?: StringNullableWithAggregatesFilter<"Users"> | string | null
   }
 
   export type FleetWhereInput = {
     AND?: FleetWhereInput | FleetWhereInput[]
     OR?: FleetWhereInput[]
     NOT?: FleetWhereInput | FleetWhereInput[]
-    id?: IntFilter<"Fleet"> | number
+    id?: StringFilter<"Fleet"> | string
     fleetName?: StringFilter<"Fleet"> | string
     fleetDetails?: StringFilter<"Fleet"> | string
     createdAt?: DateTimeFilter<"Fleet"> | Date | string
     latitude?: FloatNullableFilter<"Fleet"> | number | null
     longitude?: FloatNullableFilter<"Fleet"> | number | null
     locationName?: StringNullableFilter<"Fleet"> | string | null
-    userId?: IntFilter<"Fleet"> | number
-    user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
+    users?: UsersListRelationFilter
   }
 
   export type FleetOrderByWithRelationInput = {
@@ -3464,13 +3480,11 @@ export namespace Prisma {
     latitude?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
     locationName?: SortOrderInput | SortOrder
-    userId?: SortOrder
-    user?: UsersOrderByWithRelationInput
+    users?: UsersOrderByRelationAggregateInput
   }
 
   export type FleetWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    userId?: number
+    id?: string
     AND?: FleetWhereInput | FleetWhereInput[]
     OR?: FleetWhereInput[]
     NOT?: FleetWhereInput | FleetWhereInput[]
@@ -3480,8 +3494,8 @@ export namespace Prisma {
     latitude?: FloatNullableFilter<"Fleet"> | number | null
     longitude?: FloatNullableFilter<"Fleet"> | number | null
     locationName?: StringNullableFilter<"Fleet"> | string | null
-    user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
-  }, "id" | "userId">
+    users?: UsersListRelationFilter
+  }, "id">
 
   export type FleetOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3491,7 +3505,6 @@ export namespace Prisma {
     latitude?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
     locationName?: SortOrderInput | SortOrder
-    userId?: SortOrder
     _count?: FleetCountOrderByAggregateInput
     _avg?: FleetAvgOrderByAggregateInput
     _max?: FleetMaxOrderByAggregateInput
@@ -3503,17 +3516,17 @@ export namespace Prisma {
     AND?: FleetScalarWhereWithAggregatesInput | FleetScalarWhereWithAggregatesInput[]
     OR?: FleetScalarWhereWithAggregatesInput[]
     NOT?: FleetScalarWhereWithAggregatesInput | FleetScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Fleet"> | number
+    id?: StringWithAggregatesFilter<"Fleet"> | string
     fleetName?: StringWithAggregatesFilter<"Fleet"> | string
     fleetDetails?: StringWithAggregatesFilter<"Fleet"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Fleet"> | Date | string
     latitude?: FloatNullableWithAggregatesFilter<"Fleet"> | number | null
     longitude?: FloatNullableWithAggregatesFilter<"Fleet"> | number | null
     locationName?: StringNullableWithAggregatesFilter<"Fleet"> | string | null
-    userId?: IntWithAggregatesFilter<"Fleet"> | number
   }
 
   export type UsersCreateInput = {
+    id?: string
     firstName: string
     lastName: string
     email: string
@@ -3521,11 +3534,11 @@ export namespace Prisma {
     role: string
     userName: string
     createdAt?: Date | string
-    fleet?: FleetCreateNestedOneWithoutUserInput
+    fleet?: FleetCreateNestedOneWithoutUsersInput
   }
 
   export type UsersUncheckedCreateInput = {
-    id?: number
+    id?: string
     firstName: string
     lastName: string
     email: string
@@ -3533,10 +3546,11 @@ export namespace Prisma {
     role: string
     userName: string
     createdAt?: Date | string
-    fleet?: FleetUncheckedCreateNestedOneWithoutUserInput
+    fleetId?: string | null
   }
 
   export type UsersUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -3544,11 +3558,11 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fleet?: FleetUpdateOneWithoutUserNestedInput
+    fleet?: FleetUpdateOneWithoutUsersNestedInput
   }
 
   export type UsersUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -3556,11 +3570,11 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fleet?: FleetUncheckedUpdateOneWithoutUserNestedInput
+    fleetId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UsersCreateManyInput = {
-    id?: number
+    id?: string
     firstName: string
     lastName: string
     email: string
@@ -3568,9 +3582,11 @@ export namespace Prisma {
     role: string
     userName: string
     createdAt?: Date | string
+    fleetId?: string | null
   }
 
   export type UsersUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -3581,7 +3597,7 @@ export namespace Prisma {
   }
 
   export type UsersUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -3589,62 +3605,65 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     userName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fleetId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FleetCreateInput = {
+    id?: string
     fleetName: string
     fleetDetails: string
     createdAt?: Date | string
     latitude?: number | null
     longitude?: number | null
     locationName?: string | null
-    user: UsersCreateNestedOneWithoutFleetInput
+    users?: UsersCreateNestedManyWithoutFleetInput
   }
 
   export type FleetUncheckedCreateInput = {
-    id?: number
+    id?: string
     fleetName: string
     fleetDetails: string
     createdAt?: Date | string
     latitude?: number | null
     longitude?: number | null
     locationName?: string | null
-    userId: number
+    users?: UsersUncheckedCreateNestedManyWithoutFleetInput
   }
 
   export type FleetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetDetails?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     locationName?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UsersUpdateOneRequiredWithoutFleetNestedInput
+    users?: UsersUpdateManyWithoutFleetNestedInput
   }
 
   export type FleetUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetDetails?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     locationName?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: IntFieldUpdateOperationsInput | number
+    users?: UsersUncheckedUpdateManyWithoutFleetNestedInput
   }
 
   export type FleetCreateManyInput = {
-    id?: number
+    id?: string
     fleetName: string
     fleetDetails: string
     createdAt?: Date | string
     latitude?: number | null
     longitude?: number | null
     locationName?: string | null
-    userId: number
   }
 
   export type FleetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetDetails?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3654,25 +3673,13 @@ export namespace Prisma {
   }
 
   export type FleetUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetDetails?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     locationName?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3701,9 +3708,29 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type FleetNullableScalarRelationFilter = {
     is?: FleetWhereInput | null
     isNot?: FleetWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type UsersCountOrderByAggregateInput = {
@@ -3715,10 +3742,7 @@ export namespace Prisma {
     role?: SortOrder
     userName?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type UsersAvgOrderByAggregateInput = {
-    id?: SortOrder
+    fleetId?: SortOrder
   }
 
   export type UsersMaxOrderByAggregateInput = {
@@ -3730,6 +3754,7 @@ export namespace Prisma {
     role?: SortOrder
     userName?: SortOrder
     createdAt?: SortOrder
+    fleetId?: SortOrder
   }
 
   export type UsersMinOrderByAggregateInput = {
@@ -3741,26 +3766,7 @@ export namespace Prisma {
     role?: SortOrder
     userName?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type UsersSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    fleetId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -3795,105 +3801,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type UsersScalarRelationFilter = {
-    is?: UsersWhereInput
-    isNot?: UsersWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
-  export type FleetCountOrderByAggregateInput = {
-    id?: SortOrder
-    fleetName?: SortOrder
-    fleetDetails?: SortOrder
-    createdAt?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
-    locationName?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type FleetAvgOrderByAggregateInput = {
-    id?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type FleetMaxOrderByAggregateInput = {
-    id?: SortOrder
-    fleetName?: SortOrder
-    fleetDetails?: SortOrder
-    createdAt?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
-    locationName?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type FleetMinOrderByAggregateInput = {
-    id?: SortOrder
-    fleetName?: SortOrder
-    fleetDetails?: SortOrder
-    createdAt?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
-    locationName?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type FleetSumOrderByAggregateInput = {
-    id?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -3912,15 +3819,86 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type FleetCreateNestedOneWithoutUserInput = {
-    create?: XOR<FleetCreateWithoutUserInput, FleetUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FleetCreateOrConnectWithoutUserInput
-    connect?: FleetWhereUniqueInput
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type FleetUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<FleetCreateWithoutUserInput, FleetUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FleetCreateOrConnectWithoutUserInput
+  export type UsersListRelationFilter = {
+    every?: UsersWhereInput
+    some?: UsersWhereInput
+    none?: UsersWhereInput
+  }
+
+  export type UsersOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FleetCountOrderByAggregateInput = {
+    id?: SortOrder
+    fleetName?: SortOrder
+    fleetDetails?: SortOrder
+    createdAt?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    locationName?: SortOrder
+  }
+
+  export type FleetAvgOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type FleetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fleetName?: SortOrder
+    fleetDetails?: SortOrder
+    createdAt?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    locationName?: SortOrder
+  }
+
+  export type FleetMinOrderByAggregateInput = {
+    id?: SortOrder
+    fleetName?: SortOrder
+    fleetDetails?: SortOrder
+    createdAt?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    locationName?: SortOrder
+  }
+
+  export type FleetSumOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type FleetCreateNestedOneWithoutUsersInput = {
+    create?: XOR<FleetCreateWithoutUsersInput, FleetUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: FleetCreateOrConnectWithoutUsersInput
     connect?: FleetWhereUniqueInput
   }
 
@@ -3932,38 +3910,32 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type FleetUpdateOneWithoutUserNestedInput = {
-    create?: XOR<FleetCreateWithoutUserInput, FleetUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FleetCreateOrConnectWithoutUserInput
-    upsert?: FleetUpsertWithoutUserInput
+  export type FleetUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<FleetCreateWithoutUsersInput, FleetUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: FleetCreateOrConnectWithoutUsersInput
+    upsert?: FleetUpsertWithoutUsersInput
     disconnect?: FleetWhereInput | boolean
     delete?: FleetWhereInput | boolean
     connect?: FleetWhereUniqueInput
-    update?: XOR<XOR<FleetUpdateToOneWithWhereWithoutUserInput, FleetUpdateWithoutUserInput>, FleetUncheckedUpdateWithoutUserInput>
+    update?: XOR<XOR<FleetUpdateToOneWithWhereWithoutUsersInput, FleetUpdateWithoutUsersInput>, FleetUncheckedUpdateWithoutUsersInput>
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
-  export type FleetUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<FleetCreateWithoutUserInput, FleetUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FleetCreateOrConnectWithoutUserInput
-    upsert?: FleetUpsertWithoutUserInput
-    disconnect?: FleetWhereInput | boolean
-    delete?: FleetWhereInput | boolean
-    connect?: FleetWhereUniqueInput
-    update?: XOR<XOR<FleetUpdateToOneWithWhereWithoutUserInput, FleetUpdateWithoutUserInput>, FleetUncheckedUpdateWithoutUserInput>
+  export type UsersCreateNestedManyWithoutFleetInput = {
+    create?: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput> | UsersCreateWithoutFleetInput[] | UsersUncheckedCreateWithoutFleetInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutFleetInput | UsersCreateOrConnectWithoutFleetInput[]
+    createMany?: UsersCreateManyFleetInputEnvelope
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
   }
 
-  export type UsersCreateNestedOneWithoutFleetInput = {
-    create?: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput>
-    connectOrCreate?: UsersCreateOrConnectWithoutFleetInput
-    connect?: UsersWhereUniqueInput
+  export type UsersUncheckedCreateNestedManyWithoutFleetInput = {
+    create?: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput> | UsersCreateWithoutFleetInput[] | UsersUncheckedCreateWithoutFleetInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutFleetInput | UsersCreateOrConnectWithoutFleetInput[]
+    createMany?: UsersCreateManyFleetInputEnvelope
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -3974,27 +3946,32 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type UsersUpdateManyWithoutFleetNestedInput = {
+    create?: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput> | UsersCreateWithoutFleetInput[] | UsersUncheckedCreateWithoutFleetInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutFleetInput | UsersCreateOrConnectWithoutFleetInput[]
+    upsert?: UsersUpsertWithWhereUniqueWithoutFleetInput | UsersUpsertWithWhereUniqueWithoutFleetInput[]
+    createMany?: UsersCreateManyFleetInputEnvelope
+    set?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    disconnect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    delete?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    update?: UsersUpdateWithWhereUniqueWithoutFleetInput | UsersUpdateWithWhereUniqueWithoutFleetInput[]
+    updateMany?: UsersUpdateManyWithWhereWithoutFleetInput | UsersUpdateManyWithWhereWithoutFleetInput[]
+    deleteMany?: UsersScalarWhereInput | UsersScalarWhereInput[]
   }
 
-  export type UsersUpdateOneRequiredWithoutFleetNestedInput = {
-    create?: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput>
-    connectOrCreate?: UsersCreateOrConnectWithoutFleetInput
-    upsert?: UsersUpsertWithoutFleetInput
-    connect?: UsersWhereUniqueInput
-    update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutFleetInput, UsersUpdateWithoutFleetInput>, UsersUncheckedUpdateWithoutFleetInput>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type UsersUncheckedUpdateManyWithoutFleetNestedInput = {
+    create?: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput> | UsersCreateWithoutFleetInput[] | UsersUncheckedCreateWithoutFleetInput[]
+    connectOrCreate?: UsersCreateOrConnectWithoutFleetInput | UsersCreateOrConnectWithoutFleetInput[]
+    upsert?: UsersUpsertWithWhereUniqueWithoutFleetInput | UsersUpsertWithWhereUniqueWithoutFleetInput[]
+    createMany?: UsersCreateManyFleetInputEnvelope
+    set?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    disconnect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    delete?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
+    update?: UsersUpdateWithWhereUniqueWithoutFleetInput | UsersUpdateWithWhereUniqueWithoutFleetInput[]
+    updateMany?: UsersUpdateManyWithWhereWithoutFleetInput | UsersUpdateManyWithWhereWithoutFleetInput[]
+    deleteMany?: UsersScalarWhereInput | UsersScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4022,31 +3999,18 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -4066,6 +4030,17 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4078,58 +4053,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4149,7 +4072,46 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type FleetCreateWithoutUserInput = {
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type FleetCreateWithoutUsersInput = {
+    id?: string
     fleetName: string
     fleetDetails: string
     createdAt?: Date | string
@@ -4158,8 +4120,8 @@ export namespace Prisma {
     locationName?: string | null
   }
 
-  export type FleetUncheckedCreateWithoutUserInput = {
-    id?: number
+  export type FleetUncheckedCreateWithoutUsersInput = {
+    id?: string
     fleetName: string
     fleetDetails: string
     createdAt?: Date | string
@@ -4168,23 +4130,24 @@ export namespace Prisma {
     locationName?: string | null
   }
 
-  export type FleetCreateOrConnectWithoutUserInput = {
+  export type FleetCreateOrConnectWithoutUsersInput = {
     where: FleetWhereUniqueInput
-    create: XOR<FleetCreateWithoutUserInput, FleetUncheckedCreateWithoutUserInput>
+    create: XOR<FleetCreateWithoutUsersInput, FleetUncheckedCreateWithoutUsersInput>
   }
 
-  export type FleetUpsertWithoutUserInput = {
-    update: XOR<FleetUpdateWithoutUserInput, FleetUncheckedUpdateWithoutUserInput>
-    create: XOR<FleetCreateWithoutUserInput, FleetUncheckedCreateWithoutUserInput>
+  export type FleetUpsertWithoutUsersInput = {
+    update: XOR<FleetUpdateWithoutUsersInput, FleetUncheckedUpdateWithoutUsersInput>
+    create: XOR<FleetCreateWithoutUsersInput, FleetUncheckedCreateWithoutUsersInput>
     where?: FleetWhereInput
   }
 
-  export type FleetUpdateToOneWithWhereWithoutUserInput = {
+  export type FleetUpdateToOneWithWhereWithoutUsersInput = {
     where?: FleetWhereInput
-    data: XOR<FleetUpdateWithoutUserInput, FleetUncheckedUpdateWithoutUserInput>
+    data: XOR<FleetUpdateWithoutUsersInput, FleetUncheckedUpdateWithoutUsersInput>
   }
 
-  export type FleetUpdateWithoutUserInput = {
+  export type FleetUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetDetails?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4193,8 +4156,8 @@ export namespace Prisma {
     locationName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type FleetUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
+  export type FleetUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetDetails?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4204,6 +4167,7 @@ export namespace Prisma {
   }
 
   export type UsersCreateWithoutFleetInput = {
+    id?: string
     firstName: string
     lastName: string
     email: string
@@ -4214,7 +4178,7 @@ export namespace Prisma {
   }
 
   export type UsersUncheckedCreateWithoutFleetInput = {
-    id?: number
+    id?: string
     firstName: string
     lastName: string
     email: string
@@ -4229,18 +4193,55 @@ export namespace Prisma {
     create: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput>
   }
 
-  export type UsersUpsertWithoutFleetInput = {
-    update: XOR<UsersUpdateWithoutFleetInput, UsersUncheckedUpdateWithoutFleetInput>
-    create: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput>
-    where?: UsersWhereInput
+  export type UsersCreateManyFleetInputEnvelope = {
+    data: UsersCreateManyFleetInput | UsersCreateManyFleetInput[]
+    skipDuplicates?: boolean
   }
 
-  export type UsersUpdateToOneWithWhereWithoutFleetInput = {
-    where?: UsersWhereInput
+  export type UsersUpsertWithWhereUniqueWithoutFleetInput = {
+    where: UsersWhereUniqueInput
+    update: XOR<UsersUpdateWithoutFleetInput, UsersUncheckedUpdateWithoutFleetInput>
+    create: XOR<UsersCreateWithoutFleetInput, UsersUncheckedCreateWithoutFleetInput>
+  }
+
+  export type UsersUpdateWithWhereUniqueWithoutFleetInput = {
+    where: UsersWhereUniqueInput
     data: XOR<UsersUpdateWithoutFleetInput, UsersUncheckedUpdateWithoutFleetInput>
   }
 
+  export type UsersUpdateManyWithWhereWithoutFleetInput = {
+    where: UsersScalarWhereInput
+    data: XOR<UsersUpdateManyMutationInput, UsersUncheckedUpdateManyWithoutFleetInput>
+  }
+
+  export type UsersScalarWhereInput = {
+    AND?: UsersScalarWhereInput | UsersScalarWhereInput[]
+    OR?: UsersScalarWhereInput[]
+    NOT?: UsersScalarWhereInput | UsersScalarWhereInput[]
+    id?: StringFilter<"Users"> | string
+    firstName?: StringFilter<"Users"> | string
+    lastName?: StringFilter<"Users"> | string
+    email?: StringFilter<"Users"> | string
+    phoneNumber?: StringFilter<"Users"> | string
+    role?: StringFilter<"Users"> | string
+    userName?: StringFilter<"Users"> | string
+    createdAt?: DateTimeFilter<"Users"> | Date | string
+    fleetId?: StringNullableFilter<"Users"> | string | null
+  }
+
+  export type UsersCreateManyFleetInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber: string
+    role: string
+    userName: string
+    createdAt?: Date | string
+  }
+
   export type UsersUpdateWithoutFleetInput = {
+    id?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -4251,7 +4252,18 @@ export namespace Prisma {
   }
 
   export type UsersUncheckedUpdateWithoutFleetInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsersUncheckedUpdateManyWithoutFleetInput = {
+    id?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string

@@ -125,7 +125,8 @@ exports.Prisma.UsersScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   role: 'role',
   userName: 'userName',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  fleetId: 'fleetId'
 };
 
 exports.Prisma.FleetScalarFieldEnum = {
@@ -135,8 +136,7 @@ exports.Prisma.FleetScalarFieldEnum = {
   createdAt: 'createdAt',
   latitude: 'latitude',
   longitude: 'longitude',
-  locationName: 'locationName',
-  userId: 'userId'
+  locationName: 'locationName'
 };
 
 exports.Prisma.SortOrder = {
