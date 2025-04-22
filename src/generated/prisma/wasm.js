@@ -132,11 +132,40 @@ exports.Prisma.UsersScalarFieldEnum = {
 exports.Prisma.FleetScalarFieldEnum = {
   id: 'id',
   fleetName: 'fleetName',
-  fleetDetails: 'fleetDetails',
-  createdAt: 'createdAt',
+  fleetBaseLocation: 'fleetBaseLocation',
   latitude: 'latitude',
   longitude: 'longitude',
-  locationName: 'locationName'
+  operationalStatus: 'operationalStatus',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.TruckScalarFieldEnum = {
+  id: 'id',
+  truckModel: 'truckModel',
+  registrationNumber: 'registrationNumber',
+  manufacturer: 'manufacturer',
+  yearOfManufacture: 'yearOfManufacture',
+  capacity: 'capacity',
+  dimensions: 'dimensions',
+  fuelType: 'fuelType',
+  mileage: 'mileage',
+  status: 'status',
+  fleetId: 'fleetId',
+  driverId: 'driverId'
+};
+
+exports.Prisma.DriverScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  registerId: 'registerId',
+  phone: 'phone',
+  license: 'license',
+  experience: 'experience',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  fleetId: 'fleetId'
 };
 
 exports.Prisma.SortOrder = {
@@ -153,11 +182,35 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.OperationalStatus = exports.$Enums.OperationalStatus = {
+  FULLY_OPERATIONAL: 'FULLY_OPERATIONAL',
+  PARTIALLY_OPERATIONAL: 'PARTIALLY_OPERATIONAL',
+  UNDER_MAINTENANCE: 'UNDER_MAINTENANCE'
+};
 
+exports.TruckStatus = exports.$Enums.TruckStatus = {
+  AVAILABLE: 'AVAILABLE',
+  UNDER_MAINTENANCE: 'UNDER_MAINTENANCE',
+  OUT_OF_SERVICE: 'OUT_OF_SERVICE',
+  IN_TRANSIT: 'IN_TRANSIT',
+  LOADING: 'LOADING',
+  UNLOADING: 'UNLOADING',
+  WAITING_FOR_ASSIGNMENT: 'WAITING_FOR_ASSIGNMENT',
+  IDLE: 'IDLE',
+  ON_SALE: 'ON_SALE'
+};
+
+exports.DriverStatus = exports.$Enums.DriverStatus = {
+  ASSIGNED: 'ASSIGNED',
+  AVAILABLE: 'AVAILABLE',
+  ON_LEAVE: 'ON_LEAVE'
+};
 
 exports.Prisma.ModelName = {
   Users: 'Users',
-  Fleet: 'Fleet'
+  Fleet: 'Fleet',
+  Truck: 'Truck',
+  Driver: 'Driver'
 };
 
 /**

@@ -80,7 +80,7 @@ const SignupPage: React.FC = () => {
         lastName: formData.lastName || '',
         email:formData.email || "", 
         phoneNumber: formData.phoneNumber || '',
-        role: formData.role || 'USER', // Default role can be 'USER' or something else
+        role: formData.role || '', // Default role can be 'USER' or something else
         userName: formData.userName || '',
       };
 
