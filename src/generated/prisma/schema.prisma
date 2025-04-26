@@ -33,8 +33,6 @@ model Fleet {
   id                String            @id @default(uuid())
   fleetName         String
   fleetBaseLocation String
-  latitude          Float
-  longitude         Float
   operationalStatus OperationalStatus @default(FULLY_OPERATIONAL)
   createdAt         DateTime          @default(now())
 

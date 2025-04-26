@@ -133,8 +133,6 @@ exports.Prisma.FleetScalarFieldEnum = {
   id: 'id',
   fleetName: 'fleetName',
   fleetBaseLocation: 'fleetBaseLocation',
-  latitude: 'latitude',
-  longitude: 'longitude',
   operationalStatus: 'operationalStatus',
   createdAt: 'createdAt'
 };

@@ -51,7 +51,7 @@ export default function VerifyPage() {
             role: metadata.role,
             userName: metadata.userName,
           }
-
+          localStorage.setItem("accesstoken",accessToken)
           // Call your backend API to store the user
           const saveRes = await fetch("/api/save-user", {
             method: "POST",
@@ -144,7 +144,7 @@ export default function VerifyPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 p-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-white-to-b from-slate-50 to-slate-100 dark:from-black dark:to-black">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1 flex flex-col items-center">
           <div className="mb-2">{getStatusIcon()}</div>

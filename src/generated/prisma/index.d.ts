@@ -2406,28 +2406,14 @@ export namespace Prisma {
 
   export type AggregateFleet = {
     _count: FleetCountAggregateOutputType | null
-    _avg: FleetAvgAggregateOutputType | null
-    _sum: FleetSumAggregateOutputType | null
     _min: FleetMinAggregateOutputType | null
     _max: FleetMaxAggregateOutputType | null
-  }
-
-  export type FleetAvgAggregateOutputType = {
-    latitude: number | null
-    longitude: number | null
-  }
-
-  export type FleetSumAggregateOutputType = {
-    latitude: number | null
-    longitude: number | null
   }
 
   export type FleetMinAggregateOutputType = {
     id: string | null
     fleetName: string | null
     fleetBaseLocation: string | null
-    latitude: number | null
-    longitude: number | null
     operationalStatus: $Enums.OperationalStatus | null
     createdAt: Date | null
   }
@@ -2436,8 +2422,6 @@ export namespace Prisma {
     id: string | null
     fleetName: string | null
     fleetBaseLocation: string | null
-    latitude: number | null
-    longitude: number | null
     operationalStatus: $Enums.OperationalStatus | null
     createdAt: Date | null
   }
@@ -2446,30 +2430,16 @@ export namespace Prisma {
     id: number
     fleetName: number
     fleetBaseLocation: number
-    latitude: number
-    longitude: number
     operationalStatus: number
     createdAt: number
     _all: number
   }
 
 
-  export type FleetAvgAggregateInputType = {
-    latitude?: true
-    longitude?: true
-  }
-
-  export type FleetSumAggregateInputType = {
-    latitude?: true
-    longitude?: true
-  }
-
   export type FleetMinAggregateInputType = {
     id?: true
     fleetName?: true
     fleetBaseLocation?: true
-    latitude?: true
-    longitude?: true
     operationalStatus?: true
     createdAt?: true
   }
@@ -2478,8 +2448,6 @@ export namespace Prisma {
     id?: true
     fleetName?: true
     fleetBaseLocation?: true
-    latitude?: true
-    longitude?: true
     operationalStatus?: true
     createdAt?: true
   }
@@ -2488,8 +2456,6 @@ export namespace Prisma {
     id?: true
     fleetName?: true
     fleetBaseLocation?: true
-    latitude?: true
-    longitude?: true
     operationalStatus?: true
     createdAt?: true
     _all?: true
@@ -2533,18 +2499,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: FleetAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: FleetSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: FleetMinAggregateInputType
@@ -2575,8 +2529,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: FleetCountAggregateInputType | true
-    _avg?: FleetAvgAggregateInputType
-    _sum?: FleetSumAggregateInputType
     _min?: FleetMinAggregateInputType
     _max?: FleetMaxAggregateInputType
   }
@@ -2585,13 +2537,9 @@ export namespace Prisma {
     id: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus: $Enums.OperationalStatus
     createdAt: Date
     _count: FleetCountAggregateOutputType | null
-    _avg: FleetAvgAggregateOutputType | null
-    _sum: FleetSumAggregateOutputType | null
     _min: FleetMinAggregateOutputType | null
     _max: FleetMaxAggregateOutputType | null
   }
@@ -2614,8 +2562,6 @@ export namespace Prisma {
     id?: boolean
     fleetName?: boolean
     fleetBaseLocation?: boolean
-    latitude?: boolean
-    longitude?: boolean
     operationalStatus?: boolean
     createdAt?: boolean
     trucks?: boolean | Fleet$trucksArgs<ExtArgs>
@@ -2628,8 +2574,6 @@ export namespace Prisma {
     id?: boolean
     fleetName?: boolean
     fleetBaseLocation?: boolean
-    latitude?: boolean
-    longitude?: boolean
     operationalStatus?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["fleet"]>
@@ -2638,8 +2582,6 @@ export namespace Prisma {
     id?: boolean
     fleetName?: boolean
     fleetBaseLocation?: boolean
-    latitude?: boolean
-    longitude?: boolean
     operationalStatus?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["fleet"]>
@@ -2648,13 +2590,11 @@ export namespace Prisma {
     id?: boolean
     fleetName?: boolean
     fleetBaseLocation?: boolean
-    latitude?: boolean
-    longitude?: boolean
     operationalStatus?: boolean
     createdAt?: boolean
   }
 
-  export type FleetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fleetName" | "fleetBaseLocation" | "latitude" | "longitude" | "operationalStatus" | "createdAt", ExtArgs["result"]["fleet"]>
+  export type FleetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fleetName" | "fleetBaseLocation" | "operationalStatus" | "createdAt", ExtArgs["result"]["fleet"]>
   export type FleetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     trucks?: boolean | Fleet$trucksArgs<ExtArgs>
     drivers?: boolean | Fleet$driversArgs<ExtArgs>
@@ -2675,8 +2615,6 @@ export namespace Prisma {
       id: string
       fleetName: string
       fleetBaseLocation: string
-      latitude: number
-      longitude: number
       operationalStatus: $Enums.OperationalStatus
       createdAt: Date
     }, ExtArgs["result"]["fleet"]>
@@ -3108,8 +3046,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Fleet", 'String'>
     readonly fleetName: FieldRef<"Fleet", 'String'>
     readonly fleetBaseLocation: FieldRef<"Fleet", 'String'>
-    readonly latitude: FieldRef<"Fleet", 'Float'>
-    readonly longitude: FieldRef<"Fleet", 'Float'>
     readonly operationalStatus: FieldRef<"Fleet", 'OperationalStatus'>
     readonly createdAt: FieldRef<"Fleet", 'DateTime'>
   }
@@ -5984,8 +5920,6 @@ export namespace Prisma {
     id: 'id',
     fleetName: 'fleetName',
     fleetBaseLocation: 'fleetBaseLocation',
-    latitude: 'latitude',
-    longitude: 'longitude',
     operationalStatus: 'operationalStatus',
     createdAt: 'createdAt'
   };
@@ -6082,20 +6016,6 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -6240,8 +6160,6 @@ export namespace Prisma {
     id?: StringFilter<"Fleet"> | string
     fleetName?: StringFilter<"Fleet"> | string
     fleetBaseLocation?: StringFilter<"Fleet"> | string
-    latitude?: FloatFilter<"Fleet"> | number
-    longitude?: FloatFilter<"Fleet"> | number
     operationalStatus?: EnumOperationalStatusFilter<"Fleet"> | $Enums.OperationalStatus
     createdAt?: DateTimeFilter<"Fleet"> | Date | string
     trucks?: TruckListRelationFilter
@@ -6253,8 +6171,6 @@ export namespace Prisma {
     id?: SortOrder
     fleetName?: SortOrder
     fleetBaseLocation?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     operationalStatus?: SortOrder
     createdAt?: SortOrder
     trucks?: TruckOrderByRelationAggregateInput
@@ -6269,8 +6185,6 @@ export namespace Prisma {
     NOT?: FleetWhereInput | FleetWhereInput[]
     fleetName?: StringFilter<"Fleet"> | string
     fleetBaseLocation?: StringFilter<"Fleet"> | string
-    latitude?: FloatFilter<"Fleet"> | number
-    longitude?: FloatFilter<"Fleet"> | number
     operationalStatus?: EnumOperationalStatusFilter<"Fleet"> | $Enums.OperationalStatus
     createdAt?: DateTimeFilter<"Fleet"> | Date | string
     trucks?: TruckListRelationFilter
@@ -6282,15 +6196,11 @@ export namespace Prisma {
     id?: SortOrder
     fleetName?: SortOrder
     fleetBaseLocation?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     operationalStatus?: SortOrder
     createdAt?: SortOrder
     _count?: FleetCountOrderByAggregateInput
-    _avg?: FleetAvgOrderByAggregateInput
     _max?: FleetMaxOrderByAggregateInput
     _min?: FleetMinOrderByAggregateInput
-    _sum?: FleetSumOrderByAggregateInput
   }
 
   export type FleetScalarWhereWithAggregatesInput = {
@@ -6300,8 +6210,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Fleet"> | string
     fleetName?: StringWithAggregatesFilter<"Fleet"> | string
     fleetBaseLocation?: StringWithAggregatesFilter<"Fleet"> | string
-    latitude?: FloatWithAggregatesFilter<"Fleet"> | number
-    longitude?: FloatWithAggregatesFilter<"Fleet"> | number
     operationalStatus?: EnumOperationalStatusWithAggregatesFilter<"Fleet"> | $Enums.OperationalStatus
     createdAt?: DateTimeWithAggregatesFilter<"Fleet"> | Date | string
   }
@@ -6574,8 +6482,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     trucks?: TruckCreateNestedManyWithoutFleetInput
@@ -6587,8 +6493,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     trucks?: TruckUncheckedCreateNestedManyWithoutFleetInput
@@ -6600,8 +6504,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trucks?: TruckUpdateManyWithoutFleetNestedInput
@@ -6613,8 +6515,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trucks?: TruckUncheckedUpdateManyWithoutFleetNestedInput
@@ -6626,8 +6526,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
   }
@@ -6636,8 +6534,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6646,8 +6542,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6993,17 +6887,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type EnumOperationalStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OperationalStatus | EnumOperationalStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OperationalStatus[] | ListEnumOperationalStatusFieldRefInput<$PrismaModel>
@@ -7045,23 +6928,14 @@ export namespace Prisma {
     id?: SortOrder
     fleetName?: SortOrder
     fleetBaseLocation?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     operationalStatus?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type FleetAvgOrderByAggregateInput = {
-    latitude?: SortOrder
-    longitude?: SortOrder
   }
 
   export type FleetMaxOrderByAggregateInput = {
     id?: SortOrder
     fleetName?: SortOrder
     fleetBaseLocation?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     operationalStatus?: SortOrder
     createdAt?: SortOrder
   }
@@ -7070,31 +6944,8 @@ export namespace Prisma {
     id?: SortOrder
     fleetName?: SortOrder
     fleetBaseLocation?: SortOrder
-    latitude?: SortOrder
-    longitude?: SortOrder
     operationalStatus?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type FleetSumOrderByAggregateInput = {
-    latitude?: SortOrder
-    longitude?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type EnumOperationalStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -7306,14 +7157,6 @@ export namespace Prisma {
     connectOrCreate?: UsersCreateOrConnectWithoutFleetInput | UsersCreateOrConnectWithoutFleetInput[]
     createMany?: UsersCreateManyFleetInputEnvelope
     connect?: UsersWhereUniqueInput | UsersWhereUniqueInput[]
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type EnumOperationalStatusFieldUpdateOperationsInput = {
@@ -7609,38 +7452,11 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedEnumOperationalStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OperationalStatus | EnumOperationalStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OperationalStatus[] | ListEnumOperationalStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.OperationalStatus[] | ListEnumOperationalStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumOperationalStatusFilter<$PrismaModel> | $Enums.OperationalStatus
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedEnumOperationalStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -7691,8 +7507,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     trucks?: TruckCreateNestedManyWithoutFleetInput
@@ -7703,8 +7517,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     trucks?: TruckUncheckedCreateNestedManyWithoutFleetInput
@@ -7731,8 +7543,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trucks?: TruckUpdateManyWithoutFleetNestedInput
@@ -7743,8 +7553,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trucks?: TruckUncheckedUpdateManyWithoutFleetNestedInput
@@ -7961,8 +7769,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     drivers?: DriverCreateNestedManyWithoutFleetInput
@@ -7973,8 +7779,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     drivers?: DriverUncheckedCreateNestedManyWithoutFleetInput
@@ -8034,8 +7838,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     drivers?: DriverUpdateManyWithoutFleetNestedInput
@@ -8046,8 +7848,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     drivers?: DriverUncheckedUpdateManyWithoutFleetNestedInput
@@ -8097,8 +7897,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     trucks?: TruckCreateNestedManyWithoutFleetInput
@@ -8109,8 +7907,6 @@ export namespace Prisma {
     id?: string
     fleetName: string
     fleetBaseLocation: string
-    latitude: number
-    longitude: number
     operationalStatus?: $Enums.OperationalStatus
     createdAt?: Date | string
     trucks?: TruckUncheckedCreateNestedManyWithoutFleetInput
@@ -8175,8 +7971,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trucks?: TruckUpdateManyWithoutFleetNestedInput
@@ -8187,8 +7981,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     fleetName?: StringFieldUpdateOperationsInput | string
     fleetBaseLocation?: StringFieldUpdateOperationsInput | string
-    latitude?: FloatFieldUpdateOperationsInput | number
-    longitude?: FloatFieldUpdateOperationsInput | number
     operationalStatus?: EnumOperationalStatusFieldUpdateOperationsInput | $Enums.OperationalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trucks?: TruckUncheckedUpdateManyWithoutFleetNestedInput
