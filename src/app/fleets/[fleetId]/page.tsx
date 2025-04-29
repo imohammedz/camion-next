@@ -1,4 +1,5 @@
-import FleetDetailDashBoard from "@/components/fleet-details-page"
+
+import FleetDetailDashboard from "@/components/fleetDetailsPage";
 
 type PageProps = {
   params: Promise<{
@@ -7,6 +8,6 @@ type PageProps = {
 };
 export default async function FleetDetail({ params }: PageProps) {
   const { fleetId } = await params;
-  return <FleetDetailDashBoard fleetId={fleetId} />
+  return <FleetDetailDashboard fleetId={fleetId} />
 }
 
