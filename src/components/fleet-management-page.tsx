@@ -12,10 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 // Mock data for fleets
 const mockFleets = [
   { id: "1", name: "North Region Fleet", trucks: 12, status: "active", location: "New York" },
-  { id: "2", name: "South Region Fleet", trucks: 8, status: "maintenance", location: "Miami" },
-  { id: "3", name: "West Region Fleet", trucks: 15, status: "active", location: "Los Angeles" },
-  { id: "4", name: "East Region Fleet", trucks: 10, status: "inactive", location: "Boston" },
-  { id: "5", name: "Central Fleet", trucks: 20, status: "active", location: "Chicago" },
+ 
 ]
 
 const FleetManagementPage: React.FC = () => {
@@ -33,13 +30,13 @@ const FleetManagementPage: React.FC = () => {
     router.push(`/fleets/${fleetId}`)
   }
 
-  const handleEditFleet = (fleetId: string) => {
-    router.push(`/fleets/${fleetId}/edit`)
-  }
+  // const handleEditFleet = (fleetId: string) => {
+  //   router.push(`/fleets/${fleetId}/edit`)
+  // }
 
-  const handleAddTrucks = (fleetId: string) => {
-    router.push(`/fleets/${fleetId}/add-trucks`)
-  }
+  // const handleAddTrucks = (fleetId: string) => {
+  //   router.push(`/fleets/${fleetId}/add-trucks`)
+  // }
 
   const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
     switch (status) {
@@ -90,12 +87,6 @@ const FleetManagementPage: React.FC = () => {
                   <div className="flex justify-center gap-2">
                     <Button variant="outline" size="sm" onClick={() => handleViewFleet(fleet.id)}>
                       View
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleEditFleet(fleet.id)}>
-                      Edit
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={() => handleAddTrucks(fleet.id)}>
-                      Add Trucks
                     </Button>
                   </div>
                 </TableCell>
