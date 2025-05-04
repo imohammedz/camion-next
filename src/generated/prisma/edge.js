@@ -142,7 +142,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\camion-next\\camion-next\\src\\generated\\prisma",
+      "value": "C:\\Users\\SATYA TEJA\\Documents\\OneDrive\\Desktop\\Camion-next\\camion-next\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -156,7 +156,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\camion-next\\camion-next\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\SATYA TEJA\\Documents\\OneDrive\\Desktop\\Camion-next\\camion-next\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
