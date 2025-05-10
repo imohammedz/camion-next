@@ -58,19 +58,6 @@ const SignupPage: React.FC = () => {
     setGeneralError("")
 
     try {
-      // Validate form data against the schema
-      // const response = await fetch(`/api/get-users?email=${encodeURIComponent(formData.email)}`, {
-      //   method: 'GET',
-      // });
-  
-      // const data = await response.json();
-  
-      // if (data.exists) {
-      //   console.log('User already exists');
-      // } else {
-      //   console.log('Email is available');
-      // }
-
       signupSchema.parse(formData)
       console.log("form data : ",formData)
 
@@ -80,7 +67,7 @@ const SignupPage: React.FC = () => {
         lastName: formData.lastName || '',
         email:formData.email || "", 
         phoneNumber: formData.phoneNumber || '',
-        role: formData.role || 'USER', // Default role can be 'USER' or something else
+        role: formData.role || '', // Default role can be 'USER' or something else
         userName: formData.userName || '',
       };
 
@@ -102,9 +89,11 @@ const SignupPage: React.FC = () => {
         console.log('Verification email sent to:', email);
         // Optionally, you can log the user data here for further use
         console.log(user);
-      }      
+      }
 
-      //router.push(`/login`) 
+
+      router.push(`/email-confirmation?email=${email}`);
+
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Convert Zod errors to a more usable format
@@ -122,7 +111,7 @@ const SignupPage: React.FC = () => {
   }
 
   return (
-    <div className="container flex items-center justify-center min-h-[80vh] px-4 py-10">
+    <div className="container flex items-center justify-center min-h-[80vh] px-4 py-10 mt-16">
       <Card className="w-full max-w-md p-8">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Sign Up</CardTitle>

@@ -8,6 +8,9 @@ import { z } from "zod"
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import LoginForm from "@/components/login-form"
 import { loginSchema } from "@/lib/zod-schemas"
+import { supabase } from "@/lib/supabase"
+import { apiService } from "@/app/api/api-service"
+import HeaderWrapper from "./header-wrapper"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -16,7 +19,6 @@ const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
-    role:"",
   })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const [generalError, setGeneralError] = useState("")
@@ -38,7 +40,7 @@ const LoginPage: React.FC = () => {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setGeneralError("")
 
@@ -46,8 +48,37 @@ const LoginPage: React.FC = () => {
       // Validate form data against the schema
       loginSchema.parse(formData)
 
-      // Redirect to home page after successful login
-      router.push("/")
+      const { email, password } = formData;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) {
+        console.warn("Login failed:", error.message)
+        setGeneralError("Invalid email or password. Please try again.")
+        return
+      }
+
+      const jwt = data.session?.access_token
+      const refreshToken = data.session?.refresh_token
+
+      if (!jwt) {
+        console.error("JWT token not found")
+        return
+      }
+
+      sessionStorage.setItem("accessToken", jwt)
+      localStorage.setItem("refreshToken", refreshToken)
+      sessionStorage.setItem("userEmail", email)
+
+      const result = await apiService(`/api/check-user-fleet?email=${encodeURIComponent(email || "")}`, {
+        method: "GET",
+      })
+
+      if (result.fleetConnected) {
+        router.push("/dashboard")
+      } else {
+        router.push("/add-fleet")
+      }
+
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Convert Zod errors to a more usable format
@@ -65,29 +96,32 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="container flex items-center justify-center min-h-[80vh] px-4 py-10">
-      <Card className="w-full max-w-md p-8">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
-        </CardHeader>
-        <LoginForm
-          title="Welcome Back"
-          description="Log in to continue where you left off."
-          formData={formData}
-          handleChange={handleChange}
-          errors={errors}
-          generalError={generalError}
-          handleSubmit={handleSubmit}
-        />
-        <CardFooter className="flex justify-center">
-          <p className="text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link href={`/signup`} className="text-primary underline-offset-4 hover:underline">
-              Sign Up
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
+    <div>
+      <HeaderWrapper />
+      <div className="container flex items-center justify-center min-h-[80vh] px-4 py-10">
+        <Card className="w-full max-w-md p-8">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
+          </CardHeader>
+          <LoginForm
+            title="Welcome Back"
+            description="Log in to continue where you left off."
+            formData={formData}
+            handleChange={handleChange}
+            errors={errors}
+            generalError={generalError}
+            handleSubmit={handleSubmit}
+          />
+          <CardFooter className="flex justify-center">
+            <p className="text-sm text-muted-foreground">
+              Don&apos;t have an account?{" "}
+              <Link href={`/signup`} className="text-primary underline-offset-4 hover:underline">
+                Sign Up
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   )
 }

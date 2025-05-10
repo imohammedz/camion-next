@@ -37,6 +37,5 @@ export const loginSchema = z.object({
                 message: "Please enter a valid email address or username",
             }
         ),
-    role: z.string().min(1, "Role is required"),
     password: z.string().min(1, "Password is required"),
 })

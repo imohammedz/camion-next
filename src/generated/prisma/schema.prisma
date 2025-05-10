@@ -25,19 +25,79 @@ model Users {
   userName    String   @unique
   createdAt   DateTime @default(now())
 
+  fleetId String?
   fleet   Fleet?  @relation(fields: [fleetId], references: [id])
-  fleetId String? // Optional foreign key if not all users belong to a fleet
 }
 
 model Fleet {
-  id           String   @id @default(uuid())
-  fleetName    String
-  fleetDetails String
-  createdAt    DateTime @default(now())
+  id                String            @id @default(uuid())
+  fleetName         String
+  fleetBaseLocation String
+  operationalStatus OperationalStatus @default(FULLY_OPERATIONAL)
+  createdAt         DateTime          @default(now())
 
-  latitude     Float?
-  longitude    Float?
-  locationName String?
+  trucks  Truck[]
+  drivers Driver[]
+  users   Users[]
+}
 
-  users Users[] // Back-reference to list of users in this fleet
+model Truck {
+  id                 String      @id @default(uuid())
+  truckModel         String
+  registrationNumber String      @unique
+  manufacturer       String
+  yearOfManufacture  String
+  capacity           String
+  dimensions         String?
+  fuelType           String
+  mileage            String?
+  status             TruckStatus @default(AVAILABLE)
+
+  fleetId String
+  fleet   Fleet  @relation(fields: [fleetId], references: [id])
+
+  driverId String?
+  driver   Driver? @relation("DriverToTruck", fields: [driverId], references: [id])
+}
+
+model Driver {
+  id         String       @id @default(uuid())
+  name       String
+  email      String       @unique
+  registerId String       @unique
+  phone      String
+  license    String       @unique
+  experience String
+  status     DriverStatus @default(AVAILABLE)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  fleetId String?
+  fleet   Fleet?  @relation(fields: [fleetId], references: [id])
+
+  trucks Truck[] @relation("DriverToTruck")
+}
+
+enum OperationalStatus {
+  FULLY_OPERATIONAL
+  PARTIALLY_OPERATIONAL
+  UNDER_MAINTENANCE
+}
+
+enum DriverStatus {
+  ASSIGNED
+  AVAILABLE
+  ON_LEAVE
+}
+
+enum TruckStatus {
+  AVAILABLE
+  UNDER_MAINTENANCE
+  OUT_OF_SERVICE
+  IN_TRANSIT
+  LOADING
+  UNLOADING
+  WAITING_FOR_ASSIGNMENT
+  IDLE
+  ON_SALE
 }
