@@ -194,7 +194,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\SATYA TEJA\\Documents\\OneDrive\\Desktop\\Camion-next\\camion-next\\src\\generated\\prisma",
+      "value": "C:\\Users\\SATYA TEJA\\Documents\\OneDrive\\Desktop\\camion\\camion-next\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -208,7 +208,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\SATYA TEJA\\Documents\\OneDrive\\Desktop\\Camion-next\\camion-next\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\SATYA TEJA\\Documents\\OneDrive\\Desktop\\camion\\camion-next\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -226,7 +226,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres.iyzrobakmxnjcglubyyo:Camionnext@2025@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
+        "value": "postgresql://postgres.iyzrobakmxnjcglubyyo:Camionnext%402025@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
       }
     }
   },
