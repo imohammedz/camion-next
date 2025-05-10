@@ -52,8 +52,8 @@ export default function AddFleetForm() {
                 method: "POST",
                 body: values
             })
-            console.log(result)
-            route.push("/dashboard")
+            console.log("reslut **********",result)
+            route.push(`/dashboard/id=${result.fleet.id}`)
         } catch (error) {
             console.error("Error submitting form:", error)
         } finally {
