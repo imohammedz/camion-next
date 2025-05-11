@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { CheckCircle, XCircle, AlertTriangle, Loader2 } from "lucide-react"
 import { TruckLoader } from "@/components/truck-loader"
+import { createUser } from "@/app/actions/user"
 
 export default function VerifyPage() {
   const router = useRouter()
@@ -53,16 +54,9 @@ export default function VerifyPage() {
           }
           localStorage.setItem("accesstoken",accessToken)
           // Call your backend API to store the user
-          const saveRes = await fetch("/api/save-user", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(userPayload),
-          })
+          const saveRes = await createUser(userPayload)
 
-          if (saveRes.ok) {
+          if (saveRes.user) {
             setStatus("success")
             setMessage("Your email has been verified successfully!")
           } else {

@@ -9,6 +9,7 @@ import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import SignupForm from "@/components/signup-form"
 import { signupSchema } from "@/lib/zod-schemas"
 import { supabase } from "@/lib/supabase"
+import { getUserIdByEmail } from "@/app/actions/user"
 
 type SignupFormData = z.infer<typeof signupSchema>
 
@@ -71,6 +72,14 @@ const SignupPage: React.FC = () => {
         userName: formData.userName || '',
       };
 
+     const userId = await getUserIdByEmail(formData.email)
+
+      if(userId){
+        setGeneralError("User name or email altrady present");
+        return
+      }
+
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -85,12 +94,6 @@ const SignupPage: React.FC = () => {
       }
   
       const user = data?.user; // Get the user from data
-      if (user) {
-        console.log('Verification email sent to:', email);
-        // Optionally, you can log the user data here for further use
-        console.log(user);
-      }
-
 
       router.push(`/email-confirmation?email=${email}`);
 

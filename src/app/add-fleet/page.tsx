@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { apiService } from "@/app/api/api-service"
 import { useRouter } from "next/navigation"
+import { createFleet } from "../actions/fleet"
 
 // Define the form schema with Zod
 const formSchema = z.object({
@@ -48,12 +48,8 @@ export default function AddFleetForm() {
     const handleSubmit = async (values: FormValues) => {
         setIsSubmitting(true)
         try {
-            const result = await apiService(`/api/fleet/create`, {
-                method: "POST",
-                body: values
-            })
-            console.log(result)
-            route.push("/dashboard")
+            const result = await createFleet(values)
+            route.push(`/dashboard?fleetId=${result.fleetId}`)
         } catch (error) {
             console.error("Error submitting form:", error)
         } finally {

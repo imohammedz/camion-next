@@ -3,4 +3,14 @@ export interface FleetInfo {
     fleetBaseLocation: string;
     operationalStatus: string;
   }
+  export interface CreateUserInput {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  role?: string;
+  userName?: string;
+};
+
 
