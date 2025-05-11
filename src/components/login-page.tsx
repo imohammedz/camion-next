@@ -9,8 +9,8 @@ import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import LoginForm from "@/components/login-form"
 import { loginSchema } from "@/lib/zod-schemas"
 import { supabase } from "@/lib/supabase"
-import { apiService } from "@/app/api/api-service"
 import HeaderWrapper from "./header-wrapper"
+import { checkFleetConnection } from "@/app/actions/fleet"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -69,12 +69,10 @@ const LoginPage: React.FC = () => {
       localStorage.setItem("refreshToken", refreshToken)
       sessionStorage.setItem("userEmail", email)
 
-      const result = await apiService(`/api/check-user-fleet?email=${encodeURIComponent(email || "")}`, {
-        method: "GET",
-      })
+      const result = await checkFleetConnection(email);
 
       if (result.fleetConnected) {
-        router.push("/dashboard")
+        router.push(`/dashboard?fleetId=${result.fleetId}`)
       } else {
         router.push("/add-fleet")
       }

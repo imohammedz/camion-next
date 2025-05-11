@@ -194,7 +194,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\camion-next\\camion-next\\src\\generated\\prisma",
+      "value": "C:\\Users\\gvkar\\Desktop\\camion-app\\camion-next\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -208,7 +208,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\camion-next\\camion-next\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\gvkar\\Desktop\\camion-app\\camion-next\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -222,11 +222,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres.iyzrobakmxnjcglubyyo:Camionnext@2025@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
+        "value": null
       }
     }
   },

@@ -1,31 +1,28 @@
 "use client"
 import { ArrowLeft, Check, Edit, MapPin, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { apiService } from "@/app/api/api-service"
 import { useEffect, useState } from "react";
 import { FleetInfo } from "@/lib/models";
 import { formatString } from "@/lib/helper";
+import { useParams } from "next/navigation";
+import { getFleetInfoById } from "@/app/actions/fleet";
 
 export default function FleetHeader() {
+  const { fleetId } = useParams();
   const [fleetInfo, setFleetInfo] = useState<FleetInfo | null>(null);
 
   useEffect(() => {
-    const fetchFleet = async () => {
-      try {
-        const result = await apiService(`/api/fleet/get`, {
-          method: "GET",
-        });
+    if (!fleetId || typeof fleetId !== "string") return;
 
-        if (result) {
-          setFleetInfo(result);
-        }
-      } catch (err: any) {
-        console.info("Failed to fetch fleet info:", err);
+    const fetchFleet = async () => {
+      const result = await getFleetInfoById(fleetId);
+      if (!result.error && result.fleetInfo) {
+        setFleetInfo(result.fleetInfo);
       }
     };
 
     fetchFleet();
-  }, []);
+  }, [fleetId]);
   return (
     <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="flex items-center gap-2">
