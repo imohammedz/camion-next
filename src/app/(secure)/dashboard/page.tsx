@@ -1,18 +1,10 @@
-"use client"
+import { Suspense } from "react"
+import DashboardClient from "./dashboard-client"
 
-import { useState } from "react"
-import FleetHeader from "@/components/fleet/fleet-header"
-import FleetTabs from "@/components/fleet/fleet-tabs"
-
-export default function FleetDashboard() {
-  const [activeTab, setActiveTab] = useState("drivers")
-
+export default function DashboardPage() {
   return (
-    <div className="">
-      <main className="">
-        <FleetHeader />
-        <FleetTabs activeTab={activeTab} onTabChange={setActiveTab} />
-      </main>
-    </div>
+    <Suspense fallback={<div>Loading dashboard...</div>}>
+      <DashboardClient />
+    </Suspense>
   )
 }

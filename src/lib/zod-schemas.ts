@@ -39,3 +39,19 @@ export const loginSchema = z.object({
         ),
     password: z.string().min(1, "Password is required"),
 })
+
+export const fleetFormSchema = z.object({
+    fleetName: z.string().min(2, { message: "Fleet name must be at least 2 characters" }),
+    fleetBaseLocation: z.string().min(2, { message: "Base location is required" }),
+    operationalStatus: z.enum(["FULLY_OPERATIONAL", "PARTIALLY_OPERATIONAL", "NON_OPERATIONAL"], {
+        required_error: "Please select an operational status",
+    }),
+})
+
+export const shipmentFormSchema = z.object({
+    shipmentName: z.string().min(2, { message: "Fleet name must be at least 2 characters" }),
+    shipmentBaseLocation: z.string().min(2, { message: "Base location is required" }),
+    operationalStatus: z.enum(["FULLY_OPERATIONAL", "PARTIALLY_OPERATIONAL", "NON_OPERATIONAL"], {
+        required_error: "Please select an operational status",
+    }),
+})

@@ -1,81 +1,79 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Users {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   firstName   String
   lastName    String
-  email       String   @unique
+  email       String    @unique
   phoneNumber String
   role        String
-  userName    String   @unique
-  createdAt   DateTime @default(now())
-
-  fleetId     String?  
-  fleet       Fleet?   @relation(fields: [fleetId], references: [id])
+  userName    String    @unique
+  createdAt   DateTime  @default(now())
+  fleetId     String?
+  shipmentId  String?
+  fleet       Fleet?    @relation(fields: [fleetId], references: [id])
+  shipment    Shipment? @relation(fields: [shipmentId], references: [id])
 }
 
 model Fleet {
-  id                  String            @id @default(uuid())
-  fleetName           String
-  fleetBaseLocation   String
-  operationalStatus   OperationalStatus @default(FULLY_OPERATIONAL)
-  createdAt           DateTime          @default(now())
+  id                String            @id @default(uuid())
+  fleetName         String
+  createdAt         DateTime          @default(now())
+  fleetBaseLocation String
+  operationalStatus OperationalStatus @default(FULLY_OPERATIONAL)
+  drivers           Driver[]
+  trucks            Truck[]
+  users             Users[]
+}
 
-  trucks              Truck[]
-  drivers             Driver[]
-  users               Users[]
+model Shipment {
+  id                   String            @id @default(uuid())
+  shipmentName         String
+  createdAt            DateTime          @default(now())
+  shipmentBaseLocation String
+  operationalStatus    OperationalStatus @default(FULLY_OPERATIONAL)
+  users                Users[]
 }
 
 model Truck {
-  id                  String      @id @default(uuid())
-  truckModel          String
-  registrationNumber  String      @unique
-  manufacturer        String
-  yearOfManufacture   String
-  capacity            String
-  dimensions          String?
-  fuelType            String
-  mileage             String?
-  status              TruckStatus @default(AVAILABLE)
-
-  fleetId             String
-  fleet               Fleet       @relation(fields: [fleetId], references: [id])
-
-  driverId            String?
-  driver              Driver?     @relation("DriverToTruck", fields: [driverId], references: [id])
+  id                 String      @id @default(uuid())
+  truckModel         String
+  registrationNumber String      @unique
+  manufacturer       String
+  yearOfManufacture  String
+  capacity           String
+  dimensions         String?
+  fuelType           String
+  mileage            String?
+  status             TruckStatus @default(AVAILABLE)
+  fleetId            String
+  driverId           String?
+  driver             Driver?     @relation("DriverToTruck", fields: [driverId], references: [id])
+  fleet              Fleet       @relation(fields: [fleetId], references: [id])
 }
 
 model Driver {
-  id            String       @id @default(uuid())
-  name          String
-  email         String       @unique
-  registerId    String       @unique
-  phone         String
-  license       String       @unique
-  experience    String
-  status        DriverStatus @default(AVAILABLE)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-
-  fleetId       String?
-  fleet         Fleet?        @relation(fields: [fleetId], references: [id])
-
-  trucks        Truck[]       @relation("DriverToTruck")
+  id         String       @id @default(uuid())
+  name       String
+  email      String       @unique
+  registerId String       @unique
+  phone      String
+  license    String       @unique
+  experience String
+  status     DriverStatus @default(AVAILABLE)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  fleetId    String?
+  fleet      Fleet?       @relation(fields: [fleetId], references: [id])
+  trucks     Truck[]      @relation("DriverToTruck")
 }
 
 enum OperationalStatus {
@@ -101,4 +99,3 @@ enum TruckStatus {
   IDLE
   ON_SALE
 }
-

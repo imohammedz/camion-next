@@ -30,7 +30,6 @@ const SignupPage: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log("inside the signin tab ",name)
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -47,7 +46,6 @@ const SignupPage: React.FC = () => {
   }
 
   const handlePhoneChange = (value: string) => {
-    console.log("inside the pphone number change ")
     setFormData((prev) => ({
       ...prev,
       phoneNumber: value,
@@ -60,7 +58,6 @@ const SignupPage: React.FC = () => {
 
     try {
       signupSchema.parse(formData)
-      console.log("form data : ",formData)
 
       const { email, password } = formData;
       const userMetadata = {
@@ -74,13 +71,13 @@ const SignupPage: React.FC = () => {
 
      const userId = await getUserIdByEmail(formData.email)
 
-      if(userId){
+      if(userId.userId){
         setGeneralError("User name or email altrady present");
         return
       }
 
 
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -92,8 +89,6 @@ const SignupPage: React.FC = () => {
       if (error) {
         throw new Error(error.message);
       }
-  
-      const user = data?.user; // Get the user from data
 
       router.push(`/email-confirmation?email=${email}`);
 

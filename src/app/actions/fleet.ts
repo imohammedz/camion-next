@@ -2,7 +2,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { OperationalStatus } from "@/generated/prisma";
+import { OperationalStatus } from "@prisma/client";
 import { FleetInfo } from "@/lib/models";
 
 export async function checkFleetConnection(email: string) {
@@ -23,6 +23,7 @@ export async function checkFleetConnection(email: string) {
     const isFleetConnected = !!user.fleetId;
 
     return {
+      userId: user.id,
       error: false,
       fleetConnected: isFleetConnected,
       fleetId: isFleetConnected ? user.fleetId : null,
@@ -33,9 +34,21 @@ export async function checkFleetConnection(email: string) {
   }
 }
 
-export async function createFleet(data: FleetInfo) {
+export async function createFleet(data: FleetInfo, userId: string | null) {
   try {
     const { fleetName, fleetBaseLocation, operationalStatus } = data;
+
+    if (!userId) {
+      return { error: true, message: "User ID is required to create a fleet." };
+    }
+
+    const user = await prisma.users.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return { error: true, message: "User not found." };
+    }
 
     if (!fleetName || !fleetBaseLocation) {
       return { error: true, message: "Fleet name and base location are required." };
@@ -47,6 +60,7 @@ export async function createFleet(data: FleetInfo) {
       ? (operationalStatus as OperationalStatus)
       : OperationalStatus.FULLY_OPERATIONAL;
 
+    // Create the fleet
     const newFleet = await prisma.fleet.create({
       data: {
         fleetName,
@@ -54,19 +68,26 @@ export async function createFleet(data: FleetInfo) {
         operationalStatus: status,
       },
       select: {
-        id: true, // ✅ Only select the ID
+        id: true,
       },
+    });
+
+    // Assign the fleet to the user
+    await prisma.users.update({
+      where: { id: userId },
+      data: { fleetId: newFleet.id },
     });
 
     return {
       error: false,
-      fleetId: newFleet.id, // ✅ Return only the ID
+      fleetId: newFleet.id,
     };
   } catch (error) {
     console.error("Failed to create fleet:", error);
     return { error: true, message: "Internal Server Error" };
   }
 }
+
 
 export async function getFleetInfoById(fleetId: string): Promise<{
   error: boolean;

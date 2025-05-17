@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { loginSchema } from "@/lib/zod-schemas"
-import RegularSelect from "@/components/regular-select"
+import { useRouter } from "next/navigation"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -27,6 +27,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   generalError,
   handleSubmit,
 }) => {
+  const router = useRouter()
   return (
     <div>
       <div className="mb-4">
@@ -67,6 +68,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
             onChange={handleChange}
             className={errors.password ? "border-red-500" : ""}
           />
+          <div className="flex justify-end">
+            <Button
+              variant="none"
+              type="button"
+              className="text-sm text-black dark:text-white hover:underline cursor-pointer"
+              onClick={() => router.push("/forget-password")}
+            >
+              Forget Password
+            </Button>
+          </div>
           {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
         </div>
         <Button type="submit" className="w-full">

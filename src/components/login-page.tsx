@@ -11,6 +11,8 @@ import { loginSchema } from "@/lib/zod-schemas"
 import { supabase } from "@/lib/supabase"
 import HeaderWrapper from "./header-wrapper"
 import { checkFleetConnection } from "@/app/actions/fleet"
+import { getUserIdByEmail } from "@/app/actions/user"
+import { checkShipmentConnection } from "@/app/actions/shipment"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -68,15 +70,28 @@ const LoginPage: React.FC = () => {
       sessionStorage.setItem("accessToken", jwt)
       localStorage.setItem("refreshToken", refreshToken)
       sessionStorage.setItem("userEmail", email)
-
-      const result = await checkFleetConnection(email);
-
-      if (result.fleetConnected) {
-        router.push(`/dashboard?fleetId=${result.fleetId}`)
-      } else {
-        router.push("/add-fleet")
+      const user = await getUserIdByEmail(email)
+      console.log(user)
+      if (user.userRole === "FLEET_OWNER") {
+        const fleetDetails = await checkFleetConnection(email);
+        if (!fleetDetails.error) {
+          if (fleetDetails.fleetConnected) {
+            router.push(`/dashboard?fleetId=${fleetDetails.fleetId}`)
+          } else {
+            router.push(`/add-fleet?userId=${fleetDetails.userId}`)
+          }
+        }
+      } else if (user.userRole === "SHIPMENT_OWNER") {
+        const shipmentDetails = await checkShipmentConnection(email)
+        console.log(shipmentDetails)
+        if (!shipmentDetails.error) {
+          if (shipmentDetails.shipmentConnected) {
+            router.push(`/dashboard?shipmentId=${shipmentDetails.shipmentId}`)
+          } else {
+            router.push(`/add-shipment?userId=${shipmentDetails.userId}`)
+          }
+        }
       }
-
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Convert Zod errors to a more usable format

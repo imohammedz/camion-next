@@ -56,16 +56,60 @@ export async function getUserIdByEmail(email: string) {
 
     const user = await prisma.users.findUnique({
       where: { email },
-      select: { id: true },
+      select: { id: true, role:true},
     });
 
     if (!user) {
       return { error: true, message: "User not found." };
     }
 
-    return { error: false, userId: user.id };
+    return { error: false, userId: user.id, userRole:user.role };
   } catch (error) {
     console.error("Error fetching user ID by email:", error);
+    return { error: true, message: "Internal Server Error" };
+  }
+}
+
+export async function getUserIdByFleetId(fleetId: string) {
+  try {
+    if (!fleetId) {
+      return { error: true, message: "fleetId is required." };
+    }
+
+    const user = await prisma.users.findFirst({
+      where: { fleetId },
+      select: { id: true, role: true, firstName:true },
+    });
+
+    if (!user) {
+      return { error: true, message: "User not found." };
+    }
+
+    return { error: false, userDetails:user };
+  } catch (error) {
+    console.error("Error fetching user by fleetId:", error);
+    return { error: true, message: "Internal Server Error" };
+  }
+}
+
+export async function getUserIdByShipmentId(shipmentId: string) {
+  try {
+    if (!shipmentId) {
+      return { error: true, message: "fleetId is required." };
+    }
+
+    const user = await prisma.users.findFirst({
+      where: { shipmentId },
+      select: { id: true, role: true, firstName:true },
+    });
+
+    if (!user) {
+      return { error: true, message: "User not found." };
+    }
+
+    return { error: false, userDetails:user };
+  } catch (error) {
+    console.error("Error fetching user by fleetId:", error);
     return { error: true, message: "Internal Server Error" };
   }
 }
