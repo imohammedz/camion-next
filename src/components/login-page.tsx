@@ -76,7 +76,7 @@ const LoginPage: React.FC = () => {
         const fleetDetails = await checkFleetConnection(email);
         if (!fleetDetails.error) {
           if (fleetDetails.fleetConnected) {
-            router.push(`/dashboard?fleetId=${fleetDetails.fleetId}`)
+            router.push(`/fleet-dashboard?fleetId=${fleetDetails.fleetId}`)
           } else {
             router.push(`/add-fleet?userId=${fleetDetails.userId}`)
           }
@@ -86,7 +86,7 @@ const LoginPage: React.FC = () => {
         console.log(shipmentDetails)
         if (!shipmentDetails.error) {
           if (shipmentDetails.shipmentConnected) {
-            router.push(`/dashboard?shipmentId=${shipmentDetails.shipmentId}`)
+            router.push(`/shipment-dashboard?shipmentId=${shipmentDetails.shipmentId}`)
           } else {
             router.push(`/add-shipment?userId=${shipmentDetails.userId}`)
           }

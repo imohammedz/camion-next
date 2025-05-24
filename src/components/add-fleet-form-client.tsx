@@ -37,7 +37,7 @@ export default function AddFleetFormClient() {
     setIsSubmitting(true)
     try {
       const result = await createFleet(values, userId)
-      router.push(`/dashboard?fleetId=${result.fleetId}`)
+      router.push(`/fleet-dashboard?fleetId=${result.fleetId}`)
     } catch (error) {
       console.error("Error submitting form:", error)
     } finally {
