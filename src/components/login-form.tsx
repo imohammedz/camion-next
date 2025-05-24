@@ -1,10 +1,12 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { loginSchema } from "@/lib/zod-schemas"
-import { useRouter } from "next/navigation"
+import { Eye, EyeOff } from "lucide-react"
+import { useState } from "react"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -27,7 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   generalError,
   handleSubmit,
 }) => {
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div>
       <div className="mb-4">
@@ -58,27 +60,23 @@ const LoginForm: React.FC<LoginFormProps> = ({
           )}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+        <div className="relative">
           <Input
             id="password"
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={formData.password}
             onChange={handleChange}
-            className={errors.password ? "border-red-500" : ""}
+            className={`${errors.password ? "border-red-500" : ""} pr-10`} // extra padding for icon
           />
-          <div className="flex justify-end">
-            <Button
-              variant="none"
-              type="button"
-              className="text-sm text-black dark:text-white hover:underline cursor-pointer"
-              onClick={() => router.push("/forget-password")}
+          {formData.password.length > 0 && (
+            <div
+              className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 dark:text-gray-300"
+              onClick={() => setShowPassword(!showPassword)}
             >
-              Forget Password
-            </Button>
-          </div>
-          {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </div>
+          )}
         </div>
         <Button type="submit" className="w-full">
           Sign In
