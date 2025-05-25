@@ -61,7 +61,7 @@ export async function createFleet(data: FleetInfo, userId: string | null) {
       : OperationalStatus.FULLY_OPERATIONAL;
 
     // Create the fleet
-    const newFleet = await prisma.fleet.create({
+    const newFleet = await prisma.fleet_profile.create({
       data: {
         fleetName,
         fleetBaseLocation,
@@ -99,7 +99,7 @@ export async function getFleetInfoById(fleetId: string): Promise<{
       return { error: true, message: "Fleet ID is required." };
     }
 
-    const fleet = await prisma.fleet.findUnique({
+    const fleet = await prisma.fleet_profile.findUnique({
       where: { id: fleetId },
       select: {
         fleetName: true,

@@ -9,29 +9,18 @@ datasource db {
 }
 
 model Users {
-  id          String    @id @default(uuid())
+  id          String         @id @default(uuid())
   firstName   String
   lastName    String
-  email       String    @unique
+  email       String         @unique
   phoneNumber String
   role        String
-  userName    String    @unique
-  createdAt   DateTime  @default(now())
+  userName    String         @unique
+  createdAt   DateTime       @default(now())
   fleetId     String?
   shipmentId  String?
-  fleet       Fleet?    @relation(fields: [fleetId], references: [id])
-  shipment    Shipment? @relation(fields: [shipmentId], references: [id])
-}
-
-model Fleet {
-  id                String            @id @default(uuid())
-  fleetName         String
-  createdAt         DateTime          @default(now())
-  fleetBaseLocation String
-  operationalStatus OperationalStatus @default(FULLY_OPERATIONAL)
-  drivers           Driver[]
-  trucks            Truck[]
-  users             Users[]
+  fleet       fleet_profile? @relation(fields: [fleetId], references: [id])
+  shipment    Shipment?      @relation(fields: [shipmentId], references: [id])
 }
 
 model Shipment {
@@ -44,36 +33,47 @@ model Shipment {
 }
 
 model Truck {
-  id                 String      @id @default(uuid())
+  id                 String        @id @default(uuid())
   truckModel         String
-  registrationNumber String      @unique
+  registrationNumber String        @unique
   manufacturer       String
   yearOfManufacture  String
   capacity           String
   dimensions         String?
   fuelType           String
   mileage            String?
-  status             TruckStatus @default(AVAILABLE)
+  status             TruckStatus   @default(AVAILABLE)
   fleetId            String
   driverId           String?
-  driver             Driver?     @relation("DriverToTruck", fields: [driverId], references: [id])
-  fleet              Fleet       @relation(fields: [fleetId], references: [id])
+  driver             Driver?       @relation("DriverToTruck", fields: [driverId], references: [id])
+  fleet              fleet_profile @relation(fields: [fleetId], references: [id])
 }
 
 model Driver {
-  id         String       @id @default(uuid())
+  id         String         @id @default(uuid())
   name       String
-  email      String       @unique
-  registerId String       @unique
+  email      String         @unique
+  registerId String         @unique
   phone      String
-  license    String       @unique
+  license    String         @unique
   experience String
-  status     DriverStatus @default(AVAILABLE)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  status     DriverStatus   @default(AVAILABLE)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
   fleetId    String?
-  fleet      Fleet?       @relation(fields: [fleetId], references: [id])
-  trucks     Truck[]      @relation("DriverToTruck")
+  fleet      fleet_profile? @relation(fields: [fleetId], references: [id])
+  trucks     Truck[]        @relation("DriverToTruck")
+}
+
+model fleet_profile {
+  id                String            @id @default(uuid())
+  fleetName         String
+  createdAt         DateTime          @default(now())
+  fleetBaseLocation String
+  operationalStatus OperationalStatus @default(FULLY_OPERATIONAL)
+  drivers           Driver[]
+  trucks            Truck[]
+  users             Users[]
 }
 
 enum OperationalStatus {

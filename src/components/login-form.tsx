@@ -7,6 +7,7 @@ import { z } from "zod"
 import { loginSchema } from "@/lib/zod-schemas"
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
+import Loading from "@/components/loading-animation"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
@@ -18,6 +19,7 @@ interface LoginFormProps {
   errors: { [key: string]: string }
   generalError: string
   handleSubmit: (e: React.FormEvent) => void
+  isLoading: boolean
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
@@ -28,6 +30,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   errors,
   generalError,
   handleSubmit,
+  isLoading,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
@@ -79,7 +82,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
           )}
         </div>
         <Button type="submit" className="w-full">
-          Sign In
+          {isLoading ? <Loading /> : "Sign In"}
         </Button>
       </form>
     </div>

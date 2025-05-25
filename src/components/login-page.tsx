@@ -24,6 +24,7 @@ const LoginPage: React.FC = () => {
   })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const [generalError, setGeneralError] = useState("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -45,7 +46,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setGeneralError("")
-
+    setIsLoading(true)
     try {
       // Validate form data against the schema
       loginSchema.parse(formData)
@@ -71,7 +72,6 @@ const LoginPage: React.FC = () => {
       localStorage.setItem("refreshToken", refreshToken)
       sessionStorage.setItem("userEmail", email)
       const user = await getUserIdByEmail(email)
-      console.log(user)
       if (user.userRole === "FLEET_OWNER") {
         const fleetDetails = await checkFleetConnection(email);
         if (!fleetDetails.error) {
@@ -105,6 +105,8 @@ const LoginPage: React.FC = () => {
       } else {
         setGeneralError("An unexpected error occurred. Please try again.")
       }
+    }finally{
+      setIsLoading(false)
     }
   }
 
@@ -124,6 +126,7 @@ const LoginPage: React.FC = () => {
             errors={errors}
             generalError={generalError}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
           <CardFooter className="flex justify-center">
             <p className="text-sm text-muted-foreground">
