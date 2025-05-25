@@ -1,3 +1,5 @@
+import { DriverStatus, TruckStatus } from "./enums";
+
 export interface FleetInfo {
   fleetName: string;
   fleetBaseLocation: string;
@@ -24,3 +26,31 @@ export interface ShipmentInfo {
   operationalStatus: string
 }
 
+export interface Truck {
+    id?: string; 
+    truckModel: string;
+    registrationNumber: string;
+    manufacturer: string;
+    yearOfManufacture: string;
+    capacity: string;
+    dimensions: string;
+    fuelType: string;
+    mileage: string;
+    status: TruckStatus;
+    fleetId: string;
+    driverId?: string;
+  }
+
+ export interface Driver {
+  id: string;
+  name: string;
+  email: string;
+  registerId: string;
+  phone: string;
+  license: string;
+  experience: string;
+  status: DriverStatus;
+  createdAt: string; 
+  updatedAt: string; 
+  fleetId?: string | null;
+}
