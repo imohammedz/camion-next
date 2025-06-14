@@ -11,7 +11,7 @@ export const createDriver = async (data: Driver) => {
         email: data.email,
         phone: data.phone,
         license: data.license,
-        registerId: data.registerId,
+        registerId: data?.registerId,
         experience: data.experience,
         status: data.status,
         fleetId: data.fleetId,
