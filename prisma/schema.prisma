@@ -32,6 +32,7 @@ model Fleet {
   drivers           Driver[]
   trucks            Truck[]
   users             Users[]
+  shifts            Shift[]
 }
 
 model Shipment {
@@ -64,7 +65,7 @@ model Driver {
   id         String       @id @default(uuid())
   name       String
   email      String       @unique
-  registerId String       @unique
+  registerId String      
   phone      String
   license    String       @unique
   experience String
@@ -72,8 +73,35 @@ model Driver {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   fleetId    String?
+  shiftId    String?
   fleet      Fleet?       @relation(fields: [fleetId], references: [id])
+  shifts     Shift[]      @relation("DriverShifts")
   trucks     Truck[]      @relation("DriverToTruck")
+}
+
+model Shift {
+  id          String      @id @default(uuid())
+  type        ShiftType
+  shiftSalary Float
+  shiftStatus ShiftStatus
+  fleetId     String
+  createdDate DateTime    @default(now())
+  updatedDate DateTime    @updatedAt
+
+  drivers Driver[] @relation("DriverShifts")
+  fleet   Fleet?   @relation(fields: [fleetId], references: [id])
+}
+
+enum ShiftStatus {
+  ACTIVE
+  DEACTIVE
+}
+
+enum ShiftType {
+  MONTHLY
+  WEEKLY
+  TRIP_BASED
+  KM
 }
 
 enum OperationalStatus {

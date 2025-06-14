@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DriverTab from "@/components/fleet/tabs/driver-tab";
 import OverviewTab from "@/components/fleet/tabs/overview-tab";
 import FleetTrucksTable from "./tabs/fleetTrucks";
+import { ShiftTab } from "./tabs/shift-tab";
 
 interface FleetTabsProps {
   activeTab: string;
@@ -11,7 +12,6 @@ interface FleetTabsProps {
 }
 
 export default function FleetTabs({ activeTab, onTabChange }: FleetTabsProps) {
- 
   return (
     <Tabs defaultValue="drivers" className="mb-6" onValueChange={onTabChange}>
       <TabsList className="grid w-full grid-cols-4 max-w-md">
@@ -26,7 +26,7 @@ export default function FleetTabs({ activeTab, onTabChange }: FleetTabsProps) {
       </TabsContent>
 
       <TabsContent value="overview">
-        <OverviewTab/>
+        <OverviewTab />
       </TabsContent>
 
       <TabsContent value="trucks">
@@ -34,11 +34,7 @@ export default function FleetTabs({ activeTab, onTabChange }: FleetTabsProps) {
       </TabsContent>
 
       <TabsContent value="shifts">
-        <div className="flex items-center justify-center h-40 border rounded-md">
-          <p className="text-muted-foreground">
-            Shifts content will appear here
-          </p>
-        </div>
+        <ShiftTab />
       </TabsContent>
     </Tabs>
   );

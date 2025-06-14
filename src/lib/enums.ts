@@ -15,3 +15,15 @@ export enum DriverStatus {
   AVAILABLE = "AVAILABLE",
   ON_LEAVE = "ON_LEAVE",
 }
+
+export enum ShiftType {
+  MONTHLY = "MONTHLY",
+  WEEKLY = "WEEKLY",
+  TRIP_BASED = "TRIP_BASED",
+  KM = "KM",
+}
+
+export enum ShiftStatus {
+   ACTIVE = "ACTIVE",
+  DEACTIVE = "DEACTIVE",
+}

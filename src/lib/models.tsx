@@ -1,4 +1,4 @@
-import { DriverStatus, TruckStatus } from "./enums";
+import { DriverStatus, ShiftStatus, ShiftType, TruckStatus } from "./enums";
 
 export interface FleetInfo {
   fleetName: string;
@@ -53,4 +53,17 @@ export interface Truck {
   createdAt: string; 
   updatedAt: string; 
   fleetId?: string | null;
+  shiftId?: string | null;
+}
+
+export interface Shift {
+  id: string
+  type: ShiftType
+  salary: number
+  activeAndDeactiveStatus: ShiftStatus;
+  fleetId?: string
+  assignedDrivers?: Driver[]
+  createdAt: string
+  updatedAt: string
+  driversIds?: string[];
 }
