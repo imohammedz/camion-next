@@ -1,132 +1,167 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import type * as z from "zod"
-import { MapPin, Check, Loader2 } from "lucide-react"
-
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { useRouter, useSearchParams } from "next/navigation"
-import { OPERATIONAL_STATUS_OPTIONS } from "@/lib/constants"
-import { shipmentFormSchema } from "@/lib/zod-schemas"
-import { createShipment } from "@/app/actions/shipment"
+import { Building2, Phone, User } from "lucide-react"
+import { useRouter } from "next/navigation"
 
-type FormValues = z.infer<typeof shipmentFormSchema>
-
-export default function AddShipmentFormClient() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const searchParams = useSearchParams()
-  const userId = searchParams.get("userId")
+export default function CreateShipmentProfile() {
   const router = useRouter()
-
-  // Initialize react-hook-form with zod resolver
-  const form = useForm<FormValues>({
-    resolver: zodResolver(shipmentFormSchema),
-    defaultValues: {
-      shipmentName: "",
-      shipmentBaseLocation: "",
-      operationalStatus: "FULLY_OPERATIONAL",
-    },
+  const [formData, setFormData] = useState({
+    shipment_name: "",
+    shipment_base_location: "",
+    gst_number: "",
+    dot_number: "",
+    operational_status: "ACTIVE" as "ACTIVE" | "INACTIVE" | "UNDER_REVIEW",
+    contact_person: "",
+    contact_phone: "",
   })
 
-  const handleSubmit = async (values: FormValues) => {
-    setIsSubmitting(true)
-    try {
-      const result = await createShipment(values, userId)
-      router.push(`/dashboard?shipmentId=${result.shipmentId}`)
-    } catch (error) {
-      console.error("Error submitting form:", error)
-    } finally {
-      setIsSubmitting(false)
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Here you would typically save to your database
+    console.log("Shipment Profile Created:", formData)
+    router.push("/shipment-dashboard")
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="shipmentName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Shipment Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter shipment name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="shipmentBaseLocation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Destination</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <MapPin className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input className="pl-8" placeholder="City, Country" {...field} />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="operationalStatus"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Shipment Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {OPERATIONAL_STATUS_OPTIONS.map((status) => (
-                    <SelectItem key={status.value} value={status.value}>
-                      <div className="flex items-center gap-2">
-                        {status.value === "FULLY_OPERATIONAL" && <div className="h-2 w-2 rounded-full bg-green-500" />}
-                        {status.value === "PARTIALLY_OPERATIONAL" && (
-                          <div className="h-2 w-2 rounded-full bg-yellow-500" />
-                        )}
-                        {status.value === "NON_OPERATIONAL" && <div className="h-2 w-2 rounded-full bg-red-500" />}
-                        {status.label}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="flex gap-2 pt-2 w-full">
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              <>
-                <Check className="mr-2 h-4 w-4" />
-                Create Shipment
-              </>
-            )}
-          </Button>
+    <div className="flex flex-col">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        <div className="flex items-center gap-2">
+          <Building2 className="h-6 w-6" />
+          <h1 className="text-lg font-semibold">Create Shipment Profile</h1>
         </div>
-      </form>
-    </Form>
+      </header>
+
+      <main className="flex-1 space-y-4 p-4 md:p-8">
+        <div className="mx-auto max-w-2xl">
+          <Card>
+            <CardHeader>
+              <CardTitle>Shipment Entity Setup</CardTitle>
+              <CardDescription>
+                Set up your shipment profile details. This is a one-time setup for your organization.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="shipment_name">Shipment Company Name</Label>
+                    <Input
+                      id="shipment_name"
+                      value={formData.shipment_name}
+                      onChange={(e) => handleInputChange("shipment_name", e.target.value)}
+                      placeholder="Enter company name"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="shipment_base_location">Base Location</Label>
+                    <Input
+                      id="shipment_base_location"
+                      value={formData.shipment_base_location}
+                      onChange={(e) => handleInputChange("shipment_base_location", e.target.value)}
+                      placeholder="Enter base location"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="gst_number">GST Number (India)</Label>
+                    <Input
+                      id="gst_number"
+                      value={formData.gst_number}
+                      onChange={(e) => handleInputChange("gst_number", e.target.value)}
+                      placeholder="Enter GST number"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="dot_number">DOT Number (US)</Label>
+                    <Input
+                      id="dot_number"
+                      value={formData.dot_number}
+                      onChange={(e) => handleInputChange("dot_number", e.target.value)}
+                      placeholder="Enter DOT number"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="operational_status">Operational Status</Label>
+                  <Select
+                    value={formData.operational_status}
+                    onValueChange={(value) => handleInputChange("operational_status", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select operational status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ACTIVE">Active</SelectItem>
+                      <SelectItem value="INACTIVE">Inactive</SelectItem>
+                      <SelectItem value="UNDER_REVIEW">Under Review</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_person">Contact Person</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="contact_person"
+                        value={formData.contact_person}
+                        onChange={(e) => handleInputChange("contact_person", e.target.value)}
+                        placeholder="Enter contact person name"
+                        className="pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="contact_phone">Contact Phone</Label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="contact_phone"
+                        value={formData.contact_phone}
+                        onChange={(e) => handleInputChange("contact_phone", e.target.value)}
+                        placeholder="Enter contact phone"
+                        className="pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <Button type="submit" className="flex-1">
+                    Create Profile
+                  </Button>
+                  <Button type="button" variant="outline" onClick={() => router.back()}>
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
   )
 }
